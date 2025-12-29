@@ -46,7 +46,7 @@ Trabalho de Conclusão de Curso desenvolvido como parte dos requisitos para obte
 - Aplicações práticas
 
 ## 🚀 Como Jogar
-1. Acesse: [LINK DO GITHUB PAGES]
+1. Acesse: https://profsergioericmatematica.github.io/TCC-Jogo-Educativo-Funcoes-AFIM/
 2. Configure número de jogadores e dificuldade
 3. Clique em "Iniciar Jogo"
 4. Responda perguntas sobre funções matemáticas
