@@ -1,0 +1,29 @@
+# ============================================
+# .gitignore para TCC: Jogo Educativo Web
+# ============================================
+
+# Sistema Operacional
+.DS_Store
+Thumbs.db
+desktop.ini
+*.lnk
+*~
+
+# IDEs/Editores
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs e temporários
+*.log
+*.tmp
+*.temp
+*.bak
+
+# Dependências (futuro)
+node_modules/
+
+# Build/Deploy (futuro)
+dist/
+build/
