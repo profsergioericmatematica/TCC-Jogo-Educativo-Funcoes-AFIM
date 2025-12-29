@@ -4,7 +4,7 @@
 
 
 ## 📚 Sobre o Trabalho
-Trabalho de Conclusão de Curso desenvolvido como parte dos requisitos para obtenção do grau de Licenciatura em Matemática na Univesidade Virtual do Estado de São Paulo - UNIVESP].
+Trabalho de Conclusão de Curso desenvolvido como parte dos requisitos para obtenção do grau de Licenciatura em Matemática na Universidade Virtual do Estado de São Paulo - UNIVESP].
 
 **Título Completo:** "A Gamificação no Ensino da Matemática: Desenvolvimento e Aplicação de uma Ferramenta Interativa para o Estudo de Funções do 1º Grau. "
 
