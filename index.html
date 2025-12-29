@@ -1,0 +1,3436 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enfim, Afim: Funções do 1º grau em Ação</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --card-bg: #ecf0f1;
+            --card-border: #bdc3c7;
+            --dark-color: #2c3e50;
+            --light-color: #ecf0f1;
+        }
+
+        body.theme-dark {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --dark-color: #1a252f;
+            --light-color: #34495e;
+            background: linear-gradient(135deg, #1a252f 0%, #2c3e50 100%);
+            color: white;
+        }
+
+        body.theme-light {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --accent-color: #e74c3c;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --dark-color: #2c3e50;
+            --light-color: #ecf0f1;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #2c3e50;
+        }
+
+        body.theme-colorblind {
+            --primary-color: #004488;
+            --secondary-color: #d55e00;
+            --accent-color: #cc79a7;
+            --success-color: #009e73;
+            --warning-color: #f0e442;
+            --dark-color: #333333;
+            --light-color: #f5f5f5;
+            background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
+            color: #333333;
+        }
+
+        body {
+            line-height: 1.6;
+            min-height: 100vh;
+            transition: background 0.5s ease;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        header {
+            background: rgba(26, 37, 47, 0.95);
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        body.theme-light header {
+            background: rgba(52, 152, 219, 0.95);
+        }
+
+        body.theme-colorblind header {
+            background: rgba(0, 68, 136, 0.95);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+            color: var(--secondary-color);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-text h1 {
+            font-size: 1.5rem;
+            margin-bottom: 3px;
+            background: linear-gradient(to right, var(--secondary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .logo-text p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        body.theme-light .logo-text p {
+            color: #2c3e50;
+        }
+
+        body.theme-colorblind .logo-text p {
+            color: #333333;
+        }
+
+        .header-timer {
+            background: rgba(231, 76, 60, 0.15);
+            border-radius: 12px;
+            padding: 8px 15px;
+            border: 2px solid rgba(231, 76, 60, 0.4);
+            display: none;
+            align-items: center;
+            gap: 10px;
+            min-width: 180px;
+        }
+
+        body.theme-light .header-timer {
+            background: rgba(231, 76, 60, 0.1);
+        }
+
+        .header-timer.active {
+            display: flex;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.4); }
+            50% { box-shadow: 0 0 0 8px rgba(231, 76, 60, 0); }
+        }
+
+        .game-container {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 20px;
+            padding: 20px 0;
+        }
+
+        @media (max-width: 1200px) {
+            .game-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .main-card-container {
+            width: 100%;
+            max-width: 400px;
+            height: 500px;
+            perspective: 1000px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 375px) {
+            .main-card-container {
+                height: 350px;
+                max-width: 280px;
+            }
+        }
+
+        .game-card {
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+            transition: transform 0.6s ease;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        .card-front {
+            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+            border: 8px solid;
+            border-radius: 20px;
+            color: var(--dark-color);
+            transform: rotateY(0deg);
+            overflow: hidden;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+        }
+
+        .card-concept .card-front { border-color: #3498db; }
+        .card-application .card-front { border-color: #2ecc71; }
+        .card-graph .card-front { border-color: #e74c3c; }
+
+        body.theme-colorblind .card-concept .card-front { border-color: #004488; }
+        body.theme-colorblind .card-application .card-front { border-color: #d55e00; }
+        body.theme-colorblind .card-graph .card-front { border-color: #cc79a7; }
+
+        .card-header {
+            background: rgba(0, 0, 0, 0.05);
+            padding: 15px 20px;
+            border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-badge {
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            color: white;
+        }
+
+        .card-concept .card-badge { background: #3498db; }
+        .card-application .card-badge { background: #2ecc71; }
+        .card-graph .card-badge { background: #e74c3c; }
+
+        body.theme-colorblind .card-concept .card-badge { background: #004488; }
+        body.theme-colorblind .card-application .card-badge { background: #d55e00; }
+        body.theme-colorblind .card-graph .card-badge { background: #cc79a7; }
+
+        .card-body {
+            flex: 1;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow-y: auto;
+        }
+
+        .card-question {
+            font-size: 1.3rem;
+            line-height: 1.5;
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(52, 152, 219, 0.1);
+            border-radius: 10px;
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        @media (max-width: 375px) {
+            .card-question {
+                font-size: 1rem;
+                padding: 10px;
+            }
+        }
+
+        .score-bubble {
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+            box-shadow: 0 5px 15px rgba(243, 156, 18, 0.4);
+            z-index: 10;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        body.theme-colorblind .score-bubble {
+            background: linear-gradient(135deg, #f0e442, #e6c300);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .level-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin: 0 5px;
+            color: white;
+        }
+
+        .level-beginner { background: #2ecc71; }
+        .level-intermediate { background: #f39c12; }
+        .level-advanced { background: #e74c3c; }
+
+        body.theme-colorblind .level-beginner { background: #009e73; }
+        body.theme-colorblind .level-intermediate { background: #f0e442; color: #333; }
+        body.theme-colorblind .level-advanced { background: #cc79a7; }
+
+        .control-panel {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        body.theme-light .control-panel {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            color: #2c3e50;
+        }
+
+        body.theme-colorblind .control-panel {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            color: #333333;
+        }
+
+        .panel-section {
+            margin-bottom: 25px;
+        }
+
+        .panel-section h3 {
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .player-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        body.theme-light .player-card {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        body.theme-colorblind .player-card {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .player-card.active {
+            border-color: var(--secondary-color);
+            background: rgba(52, 152, 219, 0.15);
+        }
+
+        body.theme-light .player-card.active {
+            background: rgba(52, 152, 219, 0.1);
+        }
+
+        .player-progress {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+
+        body.theme-light .player-progress {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        body.theme-colorblind .player-progress {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .player-progress-fill {
+            height: 100%;
+            background: linear-gradient(to right, var(--secondary-color), var(--accent-color));
+            border-radius: 3px;
+        }
+
+        .action-btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .action-btn.primary {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            color: white;
+        }
+
+        .action-btn.primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(52, 152, 219, 0.4);
+        }
+
+        .action-btn.primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        .action-btn.primary:disabled:hover {
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        .action-btn.secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        body.theme-light .action-btn.secondary,
+        body.theme-colorblind .action-btn.secondary {
+            background: rgba(0, 0, 0, 0.05);
+            color: #2c3e50;
+            border: 2px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .action-btn.secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        body.theme-light .action-btn.secondary:hover,
+        body.theme-colorblind .action-btn.secondary:hover {
+            background: rgba(0, 0, 0, 0.1);
+            border-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
+            border-radius: 20px;
+            padding: 40px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 2px solid var(--secondary-color);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        body.theme-light .modal-content,
+        body.theme-colorblind .modal-content {
+            background: linear-gradient(135deg, #ffffff, #f5f5f5);
+            color: #2c3e50;
+        }
+
+        body.theme-colorblind .modal-content {
+            color: #333333;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        body.theme-light .modal-close,
+        body.theme-colorblind .modal-close {
+            color: #2c3e50;
+        }
+
+        .modal-close:hover {
+            color: var(--accent-color);
+        }
+
+        .modal-title {
+            color: var(--secondary-color);
+            margin-bottom: 25px;
+            font-size: 2rem;
+            text-align: center;
+        }
+
+        .setup-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .interaction-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(26, 37, 47, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            width: 90%;
+            max-width: 600px;
+            border: 2px solid var(--secondary-color);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: none;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        body.theme-light .interaction-modal,
+        body.theme-colorblind .interaction-modal {
+            background: rgba(255, 255, 255, 0.95);
+            color: #2c3e50;
+        }
+
+        .question-header {
+            margin-bottom: 20px;
+        }
+
+        .question-points {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        body.theme-colorblind .question-points {
+            background: linear-gradient(135deg, #009e73, #007a5a);
+        }
+
+        .answer-options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .option-btn {
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: white;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.3s;
+        }
+
+        body.theme-light .option-btn,
+        body.theme-colorblind .option-btn {
+            background: rgba(0, 0, 0, 0.05);
+            color: #2c3e50;
+            border: 2px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .option-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        body.theme-light .option-btn:hover,
+        body.theme-colorblind .option-btn:hover {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .option-btn.selected {
+            background: rgba(52, 152, 219, 0.2);
+            border-color: var(--secondary-color);
+        }
+
+        .option-btn.correct {
+            background: rgba(46, 204, 113, 0.3);
+            border-color: #2ecc71;
+            color: #2ecc71;
+            font-weight: bold;
+        }
+
+        body.theme-light .option-btn.correct,
+        body.theme-colorblind .option-btn.correct {
+            color: #2ecc71;
+        }
+
+        .option-btn.incorrect {
+            background: rgba(231, 76, 60, 0.3);
+            border-color: #e74c3c;
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        body.theme-light .option-btn.incorrect,
+        body.theme-colorblind .option-btn.incorrect {
+            color: #e74c3c;
+        }
+
+        .option-letter {
+            width: 30px;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        body.theme-light .option-letter,
+        body.theme-colorblind .option-letter {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .option-btn.selected .option-letter {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .option-btn.correct .option-letter {
+            background: #2ecc71;
+            color: white;
+        }
+
+        .option-btn.incorrect .option-letter {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .result-screen {
+            display: none;
+        }
+
+        .result-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .result-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .result-icon.correct {
+            color: #2ecc71;
+        }
+
+        .result-icon.incorrect {
+            color: #e74c3c;
+        }
+
+        body.theme-colorblind .result-icon.correct {
+            color: #009e73;
+        }
+
+        .result-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .result-title.correct {
+            color: #2ecc71;
+        }
+
+        .result-title.incorrect {
+            color: #e74c3c;
+        }
+
+        body.theme-colorblind .result-title.correct {
+            color: #009e73;
+        }
+
+        .explanation-box {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid var(--warning-color);
+        }
+
+        body.theme-light .explanation-box,
+        body.theme-colorblind .explanation-box {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .correct-answer {
+            background: rgba(46, 204, 113, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid #2ecc71;
+        }
+
+        body.theme-colorblind .correct-answer {
+            background: rgba(0, 158, 115, 0.1);
+            border-left: 4px solid #009e73;
+        }
+
+        .score-change {
+            background: rgba(52, 152, 219, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        body.theme-colorblind .score-change {
+            background: rgba(0, 68, 136, 0.1);
+        }
+
+        .player-setup {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        @media (max-width: 768px) {
+            .player-setup {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .player-input {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .player-input input {
+            padding: 12px;
+            border-radius: 8px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            font-size: 1rem;
+        }
+
+        body.theme-light .player-input input,
+        body.theme-colorblind .player-input input {
+            border: 2px solid rgba(0, 0, 0, 0.1);
+            background: rgba(0, 0, 0, 0.05);
+            color: #2c3e50;
+        }
+
+        .player-input input.error {
+            border-color: #e74c3c;
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .hint-box {
+            background: rgba(52, 152, 219, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid #3498db;
+            animation: fadeIn 0.5s ease;
+        }
+
+        body.theme-colorblind .hint-box {
+            background: rgba(0, 68, 136, 0.1);
+            border-left: 4px solid #004488;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .combo-bonus {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #f39c12;
+            animation: bounce 0.5s ease infinite alternate;
+        }
+
+        body.theme-colorblind .combo-bonus {
+            color: #f0e442;
+        }
+
+        @keyframes bounce {
+            from { transform: scale(1); }
+            to { transform: scale(1.2); }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .main-card-container {
+                height: 400px;
+                max-width: 300px;
+            }
+            
+            .player-setup {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                padding: 25px;
+            }
+        }
+
+        @media (max-width: 375px) {
+            .game-container {
+                padding: 10px 0;
+                gap: 10px;
+            }
+            
+            .main-card-container {
+                height: 320px;
+                max-width: 260px;
+            }
+            
+            .control-panel {
+                padding: 15px;
+            }
+        
+            
+            .action-btn {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        @media (max-width: 1200px) {
+            .header-buttons {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 10px;
+                width: 100%;
+                margin-top: 15px;
+            }
+            
+            .header-buttons .action-btn {
+                width: 100%;
+                justify-content: center;
+                padding: 10px;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-buttons {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .header-buttons .action-btn span {
+                display: none;
+            }
+            
+            .header-buttons .action-btn i {
+                margin-right: 0;
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-buttons {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            #drawCardBtn {
+                grid-column: span 3;
+            }
+        }
+
+        .modal-content ul, 
+        .modal-content ol {
+            margin-left: 25px;
+            margin-bottom: 15px;
+        }
+
+        .modal-content li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body class="theme-dark">
+    <div class="setup-modal" id="setupModal">
+        <div class="modal-content">
+            <h2 class="modal-title">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                    <i class="fas fa-gamepad"></i>
+                    <span style="background: linear-gradient(135deg, var(--secondary-color), var(--accent-color)); 
+                                 -webkit-background-clip: text; 
+                                 background-clip: text; 
+                                 color: transparent;
+                                 font-weight: bold;
+                                 font-size: 1.8rem;">
+                        Enfim, Afim: Funções do 1º grau em Ação
+                        <i class="fas fa-gamepad"></i>
+                    </span>
+                </div>
+                <div style="font-size: 1.2rem; opacity: 0.9; margin-bottom: 5px;">
+                    Configuração do Jogo
+                </div>
+            </h2>
+            
+            <div class="panel-section">
+                <label style="display: block; margin-bottom: 10px; font-size: 1.1rem;">
+                    <i class="fas fa-palette"></i> Tema Visual
+                </label>
+                <div style="display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap;">
+                    <button class="action-btn secondary theme-selector" data-theme="theme-dark">
+                        <i class="fas fa-moon"></i> Escuro
+                    </button>
+                    <button class="action-btn secondary theme-selector" data-theme="theme-light">
+                        <i class="fas fa-sun"></i> Claro
+                    </button>
+                    <button class="action-btn secondary theme-selector" data-theme="theme-colorblind">
+                        <i class="fas fa-eye"></i> Daltônico
+                    </button>
+                </div>
+            </div>
+
+            <div class="panel-section">
+                <label style="display: block; margin-bottom: 10px; font-size: 1.1rem;">
+                    <i class="fas fa-chart-line"></i> Nível de Dificuldade
+                </label>
+                <div style="display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap;">
+                    <button class="action-btn secondary level-selector" data-level="beginner" data-time="60">
+                        <i class="fas fa-seedling"></i> Iniciante (60s) - 24 cartas fáceis
+                    </button>
+                    <button class="action-btn secondary level-selector active" data-level="intermediate" data-time="40">
+                        <i class="fas fa-tree"></i> Intermediário (40s) - 48 cartas (fáceis + médias)
+                    </button>
+                    <button class="action-btn secondary level-selector" data-level="advanced" data-time="20">
+                        <i class="fas fa-mountain"></i> Avançado (20s) - 54 cartas (fáceis + médias + difíceis)
+                    </button>
+                </div>
+            </div>
+
+            <div class="panel-section">
+                <label style="display: block; margin-bottom: 10px; font-size: 1.1rem;">
+                    <i class="fas fa-users"></i> Número de Jogadores (2-8)
+                </label>
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <button class="action-btn secondary" id="decreasePlayers">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <div style="font-size: 2rem; font-weight: bold; min-width: 60px; text-align: center;" id="playerCount">2</div>
+                    <button class="action-btn secondary" id="increasePlayers">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="panel-section">
+                <div id="dynamicPlayerInputs"></div>
+            </div>
+
+            <div style="margin: 30px 0;">
+                <label style="display: block; margin-bottom: 10px; font-size: 1.1rem;">
+                    <i class="fas fa-clock"></i> Tempo por turno (segundos)
+                </label>
+                <input type="range" id="turnTime" min="15" max="60" value="30" style="width: 100%;">
+                <div style="text-align: center; margin-top: 5px;">
+                    <span id="timeValue">30s</span>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 15px; margin-top: 20px;">
+                <button class="action-btn secondary" id="loadGameBtn" style="flex: 1;">
+                    <i class="fas fa-upload"></i> Carregar Jogo
+                </button>
+                <button class="action-btn primary" id="startGameBtn" style="flex: 2;">
+                    <i class="fas fa-play"></i> Iniciar Jogo
+                </button>
+            </div>
+
+            <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1);">
+                <button class="action-btn secondary" id="practiceModeBtn" style="width: 100%;">
+                    <i class="fas fa-graduation-cap"></i> Modo Prática
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="customizationModal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeCustomizationBtn">&times;</button>
+            <h2 class="modal-title">
+                <i class="fas fa-user-cog"></i> Personalização
+            </h2>
+            
+            <div class="panel-section">
+                <h3><i class="fas fa-palette"></i> Tema Visual</h3>
+                <div style="display: flex; gap: 10px; margin: 15px 0; flex-wrap: wrap;">
+                    <button class="action-btn secondary theme-selector-modal" data-theme="theme-dark">
+                        <i class="fas fa-moon"></i> Escuro
+                    </button>
+                    <button class="action-btn secondary theme-selector-modal" data-theme="theme-light">
+                        <i class="fas fa-sun"></i> Claro
+                    </button>
+                    <button class="action-btn secondary theme-selector-modal" data-theme="theme-colorblind">
+                        <i class="fas fa-eye"></i> Daltônico
+                    </button>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="action-btn primary" id="closeCustomizationBtn2">
+                    <i class="fas fa-check"></i> Aplicar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-function"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>Enfim, Afim: Funções do 1º grau em Ação</h1>
+                        <p>Domine a matemática jogando!</p>
+                    </div>
+                </div>
+                
+                <div class="header-timer" id="headerTimer">
+                    <i class="fas fa-clock"></i>
+                    <div class="header-timer-time" id="headerTimerTime">30s</div>
+                </div>
+                
+                <div class="header-buttons">
+                    <button class="action-btn secondary" id="reviewConceptsBtn">
+                        <i class="fas fa-book"></i> Revisão de Conceitos
+                    </button>
+                    <button class="action-btn secondary" id="reviewGraphsBtn">
+                        <i class="fas fa-chart-line"></i> Gráficos
+                    </button>
+                    <button class="action-btn secondary" id="instructionsBtn">
+                        <i class="fas fa-question-circle"></i> Instruções
+                    </button>
+                    <button class="action-btn secondary" id="customizationBtn">
+                        <i class="fas fa-user-cog"></i> Personalizar
+                    </button>
+                    <button class="action-btn primary" id="drawCardBtn" style="display: none;">
+                        <i class="fas fa-hand-paper"></i> Comprar Carta
+                    </button>
+                    <button class="action-btn secondary" id="resetGameBtn">
+                        <i class="fas fa-redo"></i> Novo Jogo / Resetar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="game-container">
+            <div class="cards-container">
+                <div class="card-table" id="cardTable">
+                    <div class="main-card-container" id="mainCardContainer">
+                        <div class="no-card-message" id="noCardMessage" style="text-align: center; padding: 40px;">
+                            <div style="font-size: 4rem; color: var(--secondary-color); margin-bottom: 20px;">
+                                <i class="fas fa-drafting-compass"></i>
+                            </div>
+                            <h3>Pronto para aprender?</h3>
+                            <p>Configure o jogo e clique em "Iniciar Jogo"</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="control-panel">
+                <div class="panel-section">
+                    <h3>
+                        <i class="fas fa-chart-line"></i> Progresso
+                    </h3>
+
+                <div style="margin-bottom: 15px;">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                        <div>Nível:</div>
+                        <span class="level-badge level-intermediate" id="currentLevel">Intermediário</span>
+                    </div>
+                </div>
+
+                </div>
+
+                <div class="panel-section">
+                    <h3>
+                        <i class="fas fa-trophy"></i> Jogadores
+                    </h3>
+                    <div class="players-info" id="playersInfo"></div>
+                </div>
+                
+                <div class="panel-section" style="margin-top: 20px;">
+                    <h3>
+                        <i class="fas fa-chart-bar"></i> Estatísticas
+                    </h3>
+                    <div id="gameStats" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 1.5rem; font-weight: bold;" id="totalQuestions">0</div>
+                            <div style="font-size: 0.9rem; opacity: 0.8;">Perguntas</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 1.5rem; font-weight: bold;" id="correctAnswers">0</div>
+                            <div style="font-size: 0.9rem; opacity: 0.8;">Acertos</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="interaction-modal" id="interactionModal">
+        <div class="modal-content">
+            <div id="questionScreen">
+                <div class="question-header">
+                    <div id="questionHeaderContent" style="width: 100%;"></div>
+                    
+                    <div id="questionImage" style="text-align: center; margin: 15px 0; display: none;"></div>
+                    
+                    <h3 id="questionText" style="margin-top: 15px;"></h3>
+                </div>
+                
+                <div id="hintContainer" style="display: none;">
+                    <div class="hint-box">
+                        <strong><i class="fas fa-lightbulb"></i> Dica:</strong>
+                        <span id="hintText"></span>
+                    </div>
+                </div>
+                
+                <div class="answer-options" id="answerOptions"></div>
+                <div style="text-align: center;">
+                    <button class="action-btn primary" id="submitAnswerBtn" style="width: 100%;">
+                        <i class="fas fa-paper-plane"></i> Confirmar Resposta
+                    </button>
+                </div>
+            </div>
+            
+            <div id="resultScreen" class="result-screen">
+                <div class="result-header">
+                    <div class="result-icon" id="resultIcon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="result-title" id="resultTitle">Resultado</div>
+                </div>
+                
+                <div class="explanation-box" id="explanationText"></div>
+                
+                <div class="correct-answer" id="correctAnswerBox" style="display: none;">
+                    <strong>Resposta correta:</strong> <span id="correctAnswerText"></span>
+                </div>
+                
+                <div class="score-change">
+                    <div style="font-size: 1.2rem; margin-bottom: 5px;">Pontuação Atual</div>
+                    <div style="font-size: 2rem; font-weight: bold; color: var(--secondary-color);" id="currentScore">0 pontos</div>
+                    <div style="font-size: 1.5rem; margin-top: 5px;" id="scoreChangeText">+0</div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="action-btn primary" id="nextPlayerBtn" style="width: 100%;">
+                        <i class="fas fa-forward"></i> Próximo Jogador
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="conceptsModal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeConceptsBtn">&times;</button>
+            <h2 class="modal-title">
+                <i class="fas fa-book"></i> Revisão de Conceitos - Funções Afim
+            </h2>
+            
+            <div style="margin-top: 20px;">
+                <div style="background: rgba(52, 152, 219, 0.1); padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+                    <h3 style="color: var(--secondary-color); margin-bottom: 10px;">
+                        <i class="fas fa-lightbulb"></i> O que é uma Função Afim?
+                    </h3>
+                    <p>Uma <strong>função afim</strong> (ou função do 1º grau) é toda função f: ℝ → ℝ definida por:</p>
+                    <div style="text-align: center; margin: 15px 0;">
+                        <div style="font-size: 1.5rem; font-weight: bold; color: var(--accent-color);">
+                            f(x) = ax + b
+                        </div>
+                    </div>
+                    <p>Onde:</p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li><strong>a</strong> é o <span style="color: var(--secondary-color);">coeficiente angular</span> (inclinação da reta)</li>
+                        <li><strong>b</strong> é o <span style="color: var(--success-color);">coeficiente linear</span> (onde a reta corta o eixo y)</li>
+                        <li><strong>x</strong> é a variável independente</li>
+                    </ul>
+                </div>
+                
+                <div style="background: rgba(46, 204, 113, 0.1); padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+                    <h3 style="color: var(--success-color); margin-bottom: 10px;">
+                        <i class="fas fa-calculator"></i> Coeficiente Angular (a)
+                    </h3>
+                    <p>Determina a <strong>inclinação</strong> da reta:</p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>Se <strong>a > 0</strong>: função crescente (reta sobe da esquerda para direita)</li>
+                        <li>Se <strong>a < 0</strong>: função decrescente (reta desce da esquerda para direita)</li>
+                        <li>Se <strong>a = 0</strong>: função constante (reta horizontal)</li>
+                    </ul>
+                    <div style="margin-top: 15px; padding: 10px; background: rgba(0,0,0,0.05); border-radius: 5px;">
+                        <strong>Exemplo:</strong> Em f(x) = 3x - 2, o coeficiente angular é <strong>3</strong>
+                    </div>
+                </div>
+                
+                <div style="background: rgba(243, 156, 18, 0.1); padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+                    <h3 style="color: var(--warning-color); margin-bottom: 10px;">
+                        <i class="fas fa-anchor"></i> Coeficiente Linear (b)
+                    </h3>
+                    <p>Indica onde a reta <strong>corta o eixo y</strong>:</p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>O ponto é sempre <strong>(0, b)</strong></li>
+                        <li>É o valor da função quando x = 0</li>
+                        <li>Também chamado de "termo independente"</li>
+                    </ul>
+                    <div style="margin-top: 15px; padding: 10px; background: rgba(0,0,0,0.05); border-radius: 5px;">
+                        <strong>Exemplo:</strong> Em f(x) = 3x - 2, o coeficiente linear é <strong>-2</strong>
+                    </div>
+                </div>
+                
+                <div style="background: rgba(155, 89, 182, 0.1); padding: 15px; border-radius: 10px;">
+                    <h3 style="color: #9b59b6; margin-bottom: 10px;">
+                        <i class="fas fa-crosshairs"></i> Raiz ou Zero da Função
+                    </h3>
+                    <p>É o valor de <strong>x</strong> que torna f(x) = 0:</p>
+                    <div style="text-align: center; margin: 15px 0;">
+                        <div style="font-size: 1.2rem;">
+                            Para encontrar: <strong>ax + b = 0</strong> → <strong>x = -b/a</strong>
+                        </div>
+                    </div>
+                    <p>A raiz é o ponto onde a reta corta o <strong>eixo x</strong>.</p>
+                    <div style="margin-top: 15px; padding: 10px; background: rgba(0,0,0,0.05); border-radius: 5px;">
+                        <p><strong>Exemplo:</strong> Em f(x) = 3x - 2, a raiz é x = 2/3</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="action-btn primary" id="closeConceptsBtn2">
+                    <i class="fas fa-check"></i> Entendi
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="graphsModal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeGraphsBtn">&times;</button>
+            <h2 class="modal-title">
+                <i class="fas fa-chart-line"></i> Revisão de Gráficos - Funções Afim
+            </h2>
+            
+            <div style="margin-top: 20px;">
+                <div style="background: rgba(52, 152, 219, 0.1); padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+                    <h3 style="color: var(--secondary-color); margin-bottom: 10px;">
+                        <i class="fas fa-chart-bar"></i> O Gráfico da Função Afim
+                    </h3>
+                    <p>O gráfico de uma função afim é sempre uma <strong>reta</strong>.</p>
+                    <p>Para construir o gráfico, precisamos de apenas <strong>dois pontos</strong>:</p>
+                    <ol style="margin-left: 20px; margin-top: 10px;">
+                        <li>Ponto no eixo y: <strong>(0, b)</strong></li>
+                        <li>Raiz da função: <strong>(-b/a, 0)</strong></li>
+                    </ol>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                    <div style="background: rgba(46, 204, 113, 0.1); padding: 15px; border-radius: 10px;">
+                        <h4 style="color: var(--success-color); margin-bottom: 10px;">
+                            <i class="fas fa-arrow-up"></i> Função Crescente
+                        </h4>
+                        <p>Quando <strong>a > 0</strong>:</p>
+                        <div style="text-align: center; margin: 15px 0;">
+                            <div style="font-family: monospace; font-size: 1.2rem;">
+                                ↗ Reta sobe
+                            </div>
+                        </div>
+                        <p><strong>Exemplo:</strong> f(x) = 2x + 1</p>
+                        <p><strong>Gráfico:</strong> Inclinação positiva</p>
+                    </div>
+                    
+                    <div style="background: rgba(231, 76, 60, 0.1); padding: 15px; border-radius: 10px;">
+                        <h4 style="color: var(--accent-color); margin-bottom: 10px;">
+                            <i class="fas fa-arrow-down"></i> Função Decrescente
+                        </h4>
+                        <p>Quando <strong>a < 0</strong>:</p>
+                        <div style="text-align: center; margin: 15px 0;">
+                            <div style="font-family: monospace; font-size: 1.2rem;">
+                                ↘ Reta desce
+                            </div>
+                        </div>
+                        <p><strong>Exemplo:</strong> f(x) = -x + 3</p>
+                        <p><strong>Gráfico:</strong> Inclinação negativa</p>
+                    </div>
+                </div>
+                
+                <div style="background: rgba(243, 156, 18, 0.1); padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+                    <h3 style="color: var(--warning-color); margin-bottom: 10px;">
+                        <i class="fas fa-ruler-combined"></i> Como Interpretar Gráficos
+                    </h3>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px;">
+                        <div>
+                            <h4 style="color: #3498db; font-size: 1rem;">Interseção com eixo y</h4>
+                            <p>Onde a reta toca o eixo vertical:</p>
+                            <div style="padding: 10px; background: rgba(0,0,0,0.05); border-radius: 5px;">
+                                <strong>Ponto:</strong> (0, b)<br>
+                                <strong>Lê-se:</strong> "Quando x = 0, y = b"
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 style="color: #e74c3c; font-size: 1rem;">Interseção com eixo x</h4>
+                            <p>Onde a reta toca o eixo horizontal:</p>
+                            <div style="padding: 10px; background: rgba(0,0,0,0.05); border-radius: 5px;">
+                                <strong>Ponto:</strong> (raiz, 0)<br>
+                                <strong>Lê-se:</strong> "Quando y = 0, x = raiz"
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="background: rgba(155, 89, 182, 0.1); padding: 15px; border-radius: 10px;">
+                    <h3 style="color: #9b59b6; margin-bottom: 10px;">
+                        <i class="fas fa-drafting-compass"></i> Exemplo Prático
+                    </h3>
+                    <p><strong>Função:</strong> f(x) = 2x - 4</p>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px;">
+                        <div>
+                            <h4 style="color: #2ecc71; font-size: 1rem;">Passo 1: Coeficientes</h4>
+                            <ul style="margin-left: 15px;">
+                                <li>a = 2 (crescente)</li>
+                                <li>b = -4</li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h4 style="color: #f39c12; font-size: 1rem;">Passo 2: Pontos Importantes</h4>
+                            <ul style="margin-left: 15px;">
+                                <li>Corta y: (0, -4)</li>
+                                <li>Corta x: (2, 0)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 15px; padding: 10px; background: rgba(0,0,0,0.05); border-radius: 5px; text-align: center;">
+                        <strong>Dica:</strong> Com dois pontos, você pode desenhar qualquer reta!
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="action-btn primary" id="closeGraphsBtn2">
+                    <i class="fas fa-check"></i> Visualizei
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="instructionsModal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeInstructionsBtn">&times;</button>
+            <h2 class="modal-title">
+                <i class="fas fa-gamepad"></i> Manual de Instruções - Enfim, Afim: Funções do 1º grau em Ação
+            </h2>
+            
+            <div style="margin-top: 20px;">
+                <div style="background: rgba(52, 152, 219, 0.1); padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+                    <h3 style="color: var(--secondary-color); margin-bottom: 10px;">
+                        <i class="fas fa-play-circle"></i> Como Jogar
+                    </h3>
+                    <ol style="margin-left: 20px; margin-top: 10px;">
+                        <li><strong>Configure o jogo:</strong> Escolha tema, nível e número de jogadores</li>
+                        <li><strong>Inicie o jogo:</strong> Clique em "Iniciar Jogo" ou "Modo Prática"</li>
+                        <li><strong>Compre cartas:</strong> Clique em "Comprar Carta" quando for sua vez</li>
+                        <li><strong>Responda:</strong> Escolha a alternativa correta antes do tempo acabar</li>
+                        <li><strong>Ganhe pontos:</strong> Acertos dão pontos, combos dão bônus!</li>
+                        <li><strong>Vence:</strong> Quem atingir 1000 pontos primeiro ou tiver mais pontos ao final</li>
+                    </ol>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                    <div style="background: rgba(46, 204, 113, 0.1); padding: 15px; border-radius: 10px;">
+                        <h4 style="color: var(--success-color); margin-bottom: 10px;">
+                            <i class="fas fa-chess-board"></i> Tipos de Cartas
+                        </h4>
+                        <div style="margin-top: 10px;">
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                                <div style="width: 30px; height: 30px; background: #3498db; border-radius: 5px; display: flex; align-items: center; justify-content: center;">
+                                    <i class="fas fa-book" style="color: white;"></i>
+                                </div>
+                                <div>
+                                    <strong>Conceitos:</strong> Definições básicas
+                                </div>
+                            </div>
+                            
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                                <div style="width: 30px; height: 30px; background: #2ecc71; border-radius: 5px; display: flex; align-items: center; justify-content: center;">
+                                    <i class="fas fa-briefcase" style="color: white;"></i>
+                                </div>
+                                <div>
+                                    <strong>Aplicação:</strong> Problemas do mundo real
+                                </div>
+                            </div>
+                            
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                                <div style="width: 30px; height: 30px; background: #e74c3c; border-radius: 5px; display: flex; align-items: center; justify-content: center;">
+                                    <i class="fas fa-chart-line" style="color: white;"></i>
+                                </div>
+                                <div>
+                                    <strong>Gráficos:</strong> Interpretação visual
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="background: rgba(243, 156, 18, 0.1); padding: 15px; border-radius: 10px;">
+                        <h4 style="color: var(--warning-color); margin-bottom: 10px;">
+                            <i class="fas fa-trophy"></i> Sistema de Pontos
+                        </h4>
+                        <div style="margin-top: 10px;">
+                            <p><strong>Pontos Base:</strong></p>
+                            <ul style="margin-left: 15px;">
+                                <li>Conceitos: 50 pontos</li>
+                                <li>Aplicação: 80 pontos</li>
+                                <li>Gráficos: 60 pontos</li>
+                            </ul>
+                            
+                            <p style="margin-top: 10px;"><strong>Bônus:</strong></p>
+                            <ul style="margin-left: 15px;">
+                                <li>Combo 2 acertos: +10 pontos</li>
+                                <li>Combo 3 acertos: +15 pontos</li>
+                                <li>Combo 4 acertos: +20 pontos</li>
+                                <li>Combo 5+ acertos: +25 pontos</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="background: rgba(155, 89, 182, 0.1); padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+                    <h3 style="color: #9b59b6; margin-bottom: 10px;">
+                        <i class="fas fa-sliders-h"></i> Níveis de Dificuldade
+                    </h3>
+                    <div style="text-align: center; padding: 15px; background: rgba(46, 204, 113, 0.2); border-radius: 8px;">
+    <div style="font-size: 2rem; margin-bottom: 5px;">
+        <i class="fas fa-seedling"></i>
+    </div>
+    <h4 style="color: #2ecc71;">Iniciante</h4>
+    <p><strong>60 segundos</strong></p>
+    <p>24 cartas - apenas nível Fácil</p>
+</div>
+
+<div style="text-align: center; padding: 15px; background: rgba(243, 156, 18, 0.2); border-radius: 8px;">
+    <div style="font-size: 2rem; margin-bottom: 5px;">
+        <i class="fas fa-tree"></i>
+    </div>
+    <h4 style="color: #f39c12;">Intermediário</h4>
+    <p><strong>40 segundos</strong></p>
+    <p>48 cartas - níveis Fácil + Médio</p>
+</div>
+
+<div style="text-align: center; padding: 15px; background: rgba(231, 76, 60, 0.2); border-radius: 8px;">
+    <div style="font-size: 2rem; margin-bottom: 5px;">
+        <i class="fas fa-mountain"></i>
+    </div>
+    <h4 style="color: #e74c3c;">Avançado</h4>
+    <p><strong>20 segundos</strong></p>
+    <p>54 cartas - níveis Fácil + Médio + Difícil</p>
+</div>
+                    
+                </div>
+                
+                <div style="background: rgba(52, 152, 219, 0.1); padding: 15px; border-radius: 10px;">
+                    <h3 style="color: var(--secondary-color); margin-bottom: 10px;">
+                        <i class="fas fa-star"></i> Dicas e Estratégias
+                    </h3>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px;">
+                        <div>
+                            <h4 style="color: #2ecc71; font-size: 1rem;">
+                                <i class="fas fa-bolt"></i> Para Iniciantes
+                            </h4>
+                            <ul style="margin-left: 15px;">
+                                <li>Comece no nível Iniciante</li>
+                                <li>Use os botões de revisão</li>
+                                <li>Foque em acertar, não em velocidade</li>
+                                <li>Pratique no modo individual</li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h4 style="color: #f39c12; font-size: 1rem;">
+                                <i class="fas fa-crown"></i> Para Avançados
+                            </h4>
+                            <ul style="margin-left: 15px;">
+                                <li>Tente manter combos</li>
+                                <li>Use o tempo estrategicamente</li>
+                                <li>Complete todas as conquistas</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 15px; padding: 10px; background: rgba(0,0,0,0.05); border-radius: 5px; text-align: center;">
+                        <strong>Lembre-se:</strong> O objetivo é aprender matemática enquanto se diverte!
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="action-btn primary" id="closeInstructionsBtn2">
+                    <i class="fas fa-play"></i> Jogar Agora!
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sistema de gerenciamento de estado CORRIGIDO
+        const gameState = {
+            players: [],
+            currentPlayer: 0,
+            deck: [],
+            currentCard: null,
+            gameActive: false,
+            timer: null,
+            timeLeft: 30,
+            totalQuestions: 0,
+            correctAnswers: 0,
+            totalTurns: 0,
+            maxScore: 1000,
+            gameId: Date.now().toString(),
+            practiceMode: false,
+            difficultyLevel: 'intermediate',
+            theme: 'theme-dark',
+            doublePointsActive: false,
+            hintsUsed: 0,
+            mistakesHistory: [],
+            
+            // CAMPOS ADICIONADOS PARA CORREÇÃO DO TIMER:
+            cardOnTable: false,
+            answerSubmitted: false,
+            responseStartTime: 0,
+            timerActive: false, // Controle explícito do estado do timer
+            
+            // Estatísticas da partida atual
+            currentGameStats: {
+                gameStartTime: new Date(),
+                gameEndTime: null,
+                questionsByType: {
+                    concept: 0,
+                    application: 0,
+                    graph: 0
+                },
+                responseTimes: [],
+                hintsUsed: 0,
+                mistakesHistory: [],
+                
+            }
+        };
+
+        // Filtros de dificuldade por nível
+const difficultyFilters = {
+    beginner: card => card.difficulty === "Fácil", // Apenas cartas Fáceis
+    intermediate: card => card.difficulty === "Fácil" || card.difficulty === "Média", // Fáceis + Médias
+    advanced: card => true // Todas as cartas (Fáceis, Médias e Difíceis)
+};
+
+        // Tempos por nível
+        const levelTimes = {
+            beginner: 60,
+            intermediate: 40,
+            advanced: 20
+        };
+
+        // Cores para jogadores
+        const playerColors = [
+            '#e74c3c', '#3498db', '#2ecc71', '#f39c12',
+            '#9b59b6', '#1abc9c', '#d35400', '#34495e'
+        ];
+
+        // Variáveis de controle
+        let playerCount = 2;
+
+        const allCards = [
+            {
+                id: 1,
+                type: 'concept',
+                question: "Qual o coeficiente angular (a) da função f(x) = 3x - 2?",
+                options: ["-2", "2", "x", "3"],
+                correct: 3,
+                explanation: "Na função afim f(x) = ax + b, o coeficiente angular é o valor de 'a', que multiplica o x. Portanto, a = 3.",
+                points: 50,
+                difficulty: "Fácil",
+                hint: "Observe o número que está multiplicando a variável x."
+            },
+            {
+                id: 2,
+                type: 'concept',
+                question: "Qual o coeficiente linear (b) da função f(x) = 4x + 3?",
+                options: ["4", "3", "0", "7"],
+                correct: 1,
+                explanation: "O coeficiente linear é o termo independente 'b'. Ele indica o ponto (0, b) onde a reta intercepta o eixo y.",
+                points: 50,
+                difficulty: "Fácil",
+                hint: "É o número que aparece sozinho na função, sem a variável x."
+            },
+            {
+                id: 3,
+                type: 'concept',
+                question: "A função y = -x + 2 é classificada como:",
+                options: ["Decrescente", "Crescente", "Constante", "Quadrática"],
+                correct: 0,
+                explanation: "Como o coeficiente angular é negativo (a = -1), a função é decrescente (a reta 'desce' da esquerda para a direita).",
+                points: 50,
+                difficulty: "Fácil",
+                hint: "Verifique se o coeficiente angular (a) é positivo ou negativo."
+            },
+            {
+                id: 4,
+                type: 'concept',
+                question: "A função f(x) = 6x + 2 é classificada como:",
+                options: ["Decrescente", "Crescente", "Constante", "Identidade"],
+                correct: 1,
+                explanation: "O coeficiente angular é positivo (a = 6), logo, a função é crescente.",
+                points: 50,
+                difficulty: "Fácil",
+                hint: "O coeficiente angular '6' é maior que zero."
+            },
+            {
+                id: 5,
+                type: 'concept',
+                question: "Na função y = 2x + 1, o coeficiente angular é:",
+                options: ["Negativo", "Positivo", "Nulo", "Infinito"],
+                correct: 1,
+                explanation: "O coeficiente angular é 2. Sendo 2 > 0, ele é positivo.",
+                points: 50,
+                difficulty: "Fácil",
+                hint: "O número 2 possui sinal de mais ou de menos?"
+            },
+            {
+                id: 6,
+                type: 'concept',
+                question: "Na função y = 2x + 1, o coeficiente linear indica que a reta corta o eixo y em:",
+                options: ["(0, 1)", "(1, 0)", "(2, 0)", "(0, 2)"],
+                correct: 0,
+                explanation: "O coeficiente linear b = 1. A intersecção com o eixo y ocorre sempre no ponto (0, b), logo, (0, 1).",
+                points: 50,
+                difficulty: "Média",
+                hint: "A intersecção com o eixo y ocorre quando x = 0."
+            },
+            {
+                id: 7,
+                type: 'concept',
+                question: "Determine o valor de f(1) para a função f(x) = -3x + 4.",
+                options: ["7", "1", "-1", "0"],
+                correct: 1,
+                explanation: "f(1) = -3(1) + 4 = -3 + 4 = 1.",
+                points: 50,
+                difficulty: "Fácil",
+                hint: "Substitua x por 1 e calcule o resultado."
+            },
+            {
+                id: 8,
+                type: 'concept',
+                question: "Determine o valor de f(-1) para a função f(x) = -x + 6.",
+                options: ["7", "5", "-5", "6"],
+                correct: 0,
+                explanation: "f(-1) = -(-1) + 6 = 1 + 6 = 7.",
+                points: 50,
+                difficulty: "Fácil",
+                hint: "Atenção ao jogo de sinais: -(-1) torna-se positivo."
+            },
+            {
+                id: 9,
+                type: 'concept',
+                question: "Qual o zero da função (raiz) para y = 2x - 3?",
+                options: ["x = 1,5", "x = -1,5", "x = 3", "x = 0"],
+                correct: 0,
+                explanation: "Fazendo y = 0: 0 = 2x - 3 -> 2x = 3 -> x = 3/2 = 1,5.",
+                points: 50,
+                difficulty: "Média",
+                hint: "Iguale a função a zero e resolva para x."
+            },
+            {
+                id: 10,
+                type: 'concept',
+                question: "Qual o coeficiente linear da função f(x) = x - 2?",
+                options: ["1", "2", "0", "-2"],
+                correct: 3,
+                explanation: "O termo independente na função f(x) = x - 2 é b = -2.",
+                points: 50,
+                difficulty: "Fácil",
+                hint: "Lembre-se de levar o sinal negativo junto com o número."
+            },
+            {
+                id: 11,
+                type: 'concept',
+                question: "Determine a raiz da função f(x) = x - 6.",
+                options: ["x = 6", "x = -6", "x = 0", "x = 1"],
+                correct: 0,
+                explanation: "x - 6 = 0 -> x = 6.",
+                points: 50,
+                difficulty: "Fácil",
+                hint: "Qual número subtraído de 6 resulta em zero?"
+            },
+            {
+                id: 12,
+                type: 'concept',
+                question: "A função h(x) = 7x - 2 cruza o eixo y em qual ponto?",
+                options: ["(0, -2)", "(0, 2)", "(-2, 0)", "(7, 0)"],
+                correct: 0,
+                explanation: "A intersecção com o eixo y é o ponto (0, b). Como b = -2, o ponto é (0, -2).",
+                points: 50,
+                difficulty: "Média",
+                hint: "No eixo y, a coordenada x é sempre zero."
+            },
+            {
+                id: 13,
+                type: 'concept',
+                question: "O coeficiente que determina se a função é crescente ou decrescente é o:",
+                options: ["Linear", "Exponencial", "Angular", "Independente"],
+                correct: 2,
+                explanation: "O coeficiente angular (a) determina a inclinação da reta e o comportamento da função.",
+                points: 50,
+                difficulty: "Fácil",
+                hint: "Pense na 'inclinação' da reta."
+            },
+            {
+                id: 14,
+                type: 'concept',
+                question: "Qual reta é mais inclinada (íngreme): f(x) = 2x + 5 ou g(x) = -3x + 1?",
+                options: ["f(x)", "g(x)", "Possuem a mesma inclinação", "f(x) por ser positiva"],
+                correct: 1,
+                explanation: "A inclinação é dada pelo módulo (valor absoluto) do coeficiente angular. |-3| > |2|, logo g(x) é mais íngreme.",
+                points: 50,
+                difficulty: "Média",
+                hint: "Ignore o sinal e veja qual número é maior."
+            },
+            {
+                id: 15,
+                type: 'concept',
+                question: "Determine a raiz da função f(x) = -2x + 1.",
+                options: ["x = 0,5", "x = -0,5", "x = 2", "x = 1"],
+                correct: 0,
+                explanation: "-2x + 1 = 0 -> -2x = -1 -> x = 1/2 = 0,5.",
+                points: 50,
+                difficulty: "Média",
+                hint: "A raiz é o valor de x que faz f(x) ser zero."
+            },
+            {
+                id: 16,
+                type: 'concept',
+                question: "A raiz da função f(x) intercepta qual eixo do gráfico?",
+                options: ["Eixo x (Abscissas)", "Eixo y (Ordenadas)", "Origem (0,0)", "Eixo z"],
+                correct: 0,
+                explanation: "A raiz é o valor de x quando y = 0, situando-se exatamente sobre o eixo horizontal (x).",
+                points: 50,
+                difficulty: "Fácil",
+                hint: "A raiz também é chamada de 'zero' da função."
+            },
+            {
+                id: 17,
+                type: 'application',
+                question: "Um serviço de encanador custa R$ 40 (visita) mais R$ 20 por hora. Qual a expressão do custo total (C) em horas (h)?",
+                options: ["C = 40h", "C = 20 + 40h", "C = 60h", "C = 40 + 20h"],
+                correct: 3,
+                explanation: "Taxa fixa (b=40) + taxa variável (a=20). Logo, C = 40 + 20h.",
+                points: 80,
+                difficulty: "Fácil",
+                hint: "O valor fixo não depende das horas trabalhadas."
+            },
+            {
+                id: 18,
+                type: 'application',
+                question: "Juliano cobra R$ 25 fixo mais R$ 15 por hora de aula. Qual função expressa o ganho de Juliano (G)?",
+                options: ["G = 40h", "G = 25 + 15h", "G = 25h + 15", "G = 15h"],
+                correct: 1,
+                explanation: "O valor fixo é o coeficiente linear (25) e o valor por hora é o coeficiente angular (15). G = 15h + 25.",
+                points: 80,
+                difficulty: "Fácil",
+                hint: "A parte variável sempre acompanha a variável 'h'."
+            },
+            {
+                id: 19,
+                type: 'application',
+                question: "Um comerciante gasta R$ 230 e vende cada produto por R$ 5. Quantas unidades deve vender para lucrar R$ 315?",
+                options: ["100", "109", "115", "120"],
+                correct: 1,
+                explanation: "Lucro = Venda - Gasto. 315 = 5x - 230 -> 545 = 5x -> x = 109.",
+                points: 80,
+                difficulty: "Difícil",
+                hint: "Primeiro, descubra quanto ele precisa arrecadar no total (Lucro + Gasto)."
+            },
+            {
+                id: 20,
+                type: 'application',
+                question: "Uma fábrica tem o custo fixo de R$ 8 mais R$ 0,50 por unidade produzida. Qual o custo total para fabricar 120 unidades?",
+                options: ["R$ 60,00", "R$ 68,00", "R$ 128,00", "R$ 72,00"],
+                correct: 1,
+                explanation: "C = 8 + 0,50 * 120 = 8 + 60 = 68.",
+                points: 80,
+                difficulty: "Média",
+                hint: "Calcule o custo variável total e depois some o valor fixo."
+            },
+            {
+                id: 21,
+                type: 'application',
+                question: "Imagine que você precisa fazer várias consultas médicas em um ano e tem a opção 1: Taxa inicial de R$ 100,00 + R$ 50,00 por consulta e a opção 2: Taxa inicial de R$ 180,00 + R$ 40,00 por consulta. Para poucas consultas, a primeira opção é melhor. Para muitas consultas, a segunda. Quantas consultas você precisa fazer para que a Opção 2 seja a mais econômica?",
+                options: ["Mais de 5", "Mais de 4", "Mais de 8", "Mais de 10"],
+                correct: 2,
+                explanation: "180 + 40x < 100 + 50x -> 80 < 10x -> x > 8.",
+                points: 80,
+                difficulty: "Difícil",
+                hint: "Iguale os dois planos para descobrir quando os preços são iguais."
+            },
+            {
+                id: 22,
+                type: 'application',
+                question: "Um eletricista cobra pelo seu serviço uma taxa fixa de R$ 25 mais R$ 10 por hora. Qual o valor total para 4,5 horas de serviço?",
+                options: ["R$ 65,00", "R$ 70,00", "R$ 72,50", "R$ 45,00"],
+                correct: 1,
+                explanation: "Total = 25 + 10 * 4,5 = 25 + 45 = 70.",
+                points: 80,
+                difficulty: "Média",
+                hint: "10 vezes 4,5 é igual a 45."
+            },
+            {
+                id: 23,
+                type: 'application',
+                question: "O preço y de uma camiseta é encontado pela equação y = -0,4x + 60, onde x é a quantidade pedida. Se você pedir 50 camisetas, qual o preço unitário?",
+                options: ["R$ 60,00", "R$ 40,00", "R$ 50,00", "R$ 30,00"],
+                correct: 1,
+                explanation: "y = -0,4 * 50 + 60 = -20 + 60 = 40.",
+                points: 80,
+                difficulty: "Média",
+                hint: "Substitua o x por 50 e resolva a expressão."
+            },
+            {
+                id: 24,
+                type: 'application',
+                question: "O reservatório de água A enche de acodo com a função f(t) = 200 + 3t e o reservatório B de acordo com a função g(t) = 5000 - 3t. Se começarem a ser enchidos ao mesmo tempo, em quanto tempo os volumes serão iguais?",
+                options: ["700 min", "600 min", "800 min", "500 min"],
+                correct: 2,
+                explanation: "200 + 3t = 5000 - 3t -> 6t = 4800 -> t = 800.",
+                points: 80,
+                difficulty: "Difícil",
+                hint: "Iguale as duas funções e resolva para t."
+            },
+            {
+                id: 25,
+                type: 'application',
+                question: "Uma reta de uma função f(x) = ax + b passa pelos pontos (2, 2) e (4, -2). Qual o valor de a + b?",
+                options: ["2", "4", "0", "6"],
+                correct: 1,
+                explanation: "a = (-2 - 2) / (4 - 2) = -4 / 2 = -2. Substituindo: 2 = -2(2) + b -> b = 6. a + b = -2 + 6 = 4.",
+                points: 80,
+                difficulty: "Difícil",
+                hint: "Encontre primeiro a inclinação (a) e depois o intercepto (b)."
+            },
+            {
+                id: 26,
+                type: 'application',
+                question: "Uma empresa tem um custo de R$ 2,60 por unitário fabricada, R$ 8000,00 de custo fixo e o preço de venda é de R$ 5,10. Qual a produção mínima para começarem a ter lucro?",
+                options: ["3000", "3200", "3201", "3500"],
+                correct: 2,
+                explanation: "Lucro se 5,10x > 2,60x + 8000 -> 2,50x > 8000 -> x > 3200.",
+                points: 80,
+                difficulty: "Difícil",
+                hint: "O lucro começa quando a receita de venda supera o custo total."
+            },
+            {
+                id: 27,
+                type: 'application',
+                question: "Um trabalhador cobra uma taxa fixa de R$ 30 e R$ 20 por hora de trabalho. Qual a lei da função que representa o preço P?",
+                options: ["P = 20h + 30", "P = 30h + 20", "P = 50h", "P = 20h"],
+                correct: 0,
+                explanation: "O valor fixo é b=30 e o variável a=20. Logo, P(h) = 20h + 30.",
+                points: 80,
+                difficulty: "Fácil",
+                hint: "A estrutura é sempre ax + b."
+            },
+            {
+                id: 28,
+                type: 'application',
+                question: "Para produzir doces uma doceira em custo fixo de R$ 10 e variável R$ 0,70 por doce. Qual o custo para produzir 150 doces?",
+                options: ["R$ 105,00", "R$ 115,00", "R$ 120,00", "R$ 110,00"],
+                correct: 1,
+                explanation: "C = 10 + 0,70 * 150 = 10 + 105 = 115.",
+                points: 80,
+                difficulty: "Média",
+                hint: "Primeiro multiplique o valor de cada doce pela quantidade."
+            },
+            {
+                id: 29,
+                type: 'application',
+                question: "Você está escolhendo um plano de internet. O Plano Ouro custa R$ 120,00 de instalação + R$ 60,00 por mês e O Plano Prata custa R$ 200,00 de instalação + R$ 45,00 por mês. Durante quantos meses o Plano Ouro é mais econômico que o Plano Prata?",
+                options: ["Mais de 10 meses", "Mais de 6 meses", "Menos de 6 meses", "Sempre"],
+                correct: 2,
+                explanation: "120 + 60x < 200 + 45x -> 15x < 80 -> x < 5,33. Portanto, nos primeiros 5 meses (menos de 6).",
+                points: 80,
+                difficulty: "Difícil",
+                hint: "Resolva a inequação para descobrir quando o valor de Ouro é menor que Prata."
+            },
+            {
+                id: 30,
+                type: 'application',
+                question: "Você está escolhendo um plano de academia de musculação. O Plano Ouro custa R$ 150,00 de matrícula + R$ 80,00 por mês e O Plano Prata custa R$ 100,00 de matrícula + R$ 45,00 por mês. Quando o Plano Prata deixa de ser vantajoso?",
+                options: ["Após 1 mês", "Após 5 meses", "Após 2,5 meses", "Nunca"],
+                correct: 2,
+                explanation: "100 + 100x = 150 + 80x -> 20x = 50 -> x = 2,5. Após 2,5 meses, o Plano C fica mais barato.",
+                points: 80,
+                difficulty: "Difícil",
+                hint: "Encontre o ponto de equilíbrio onde os preços se igualam."
+            },
+            {
+                id: 31,
+                type: 'graph',
+                question: "Se uma reta intercepta o eixo y no valor 3, o coeficiente linear (b) é:",
+                options: ["-3", "3", "0", "Indefinido"],
+                correct: 1,
+                explanation: "O coeficiente linear é precisamente o valor da coordenada y no ponto de intersecção com o eixo vertical.",
+                points: 60,
+                difficulty: "Fácil",
+                hint: "O coeficiente linear é o 'termo independente'."
+            },
+            {
+                id: 32,
+                type: 'graph',
+                question: "Em um gráfico de uma função crescente, a reta deve:",
+                options: ["Descer para a direita", "Subir para a direita", "Ser horizontal", "Ser vertical"],
+                correct: 1,
+                explanation: "Em funções crescentes (a > 0), conforme x aumenta, y também aumenta, fazendo a reta subir.",
+                points: 60,
+                difficulty: "Fácil",
+                hint: "Pense na direção da subida de uma montanha."
+            },
+            {
+                id: 33,
+                type: 'graph',
+                question: "Uma reta decrescente possui coeficiente angular:",
+                options: ["Maior que zero", "Igual a zero", "Menor que zero", "Infinito"],
+                correct: 2,
+                explanation: "Reta decrescente implica em um coeficiente angular (a) negativo.",
+                points: 60,
+                difficulty: "Fácil",
+                hint: "A inclinação é negativa."
+            },
+            {
+                id: 34,
+                type: 'graph',
+                question: "Em qual ponto a reta f(x) = -x + 5 intercepta o eixo y?",
+                options: ["(5, 0)", "(0, 5)", "(0, -5)", "(-5, 0)"],
+                correct: 1,
+                explanation: "Interseção com y ocorre em (0, b). Como b = 5, o ponto é (0, 5).",
+                points: 60,
+                difficulty: "Média",
+                hint: "No eixo y, o valor de x é sempre zero."
+            },
+            {
+                id: 35,
+                type: 'concept',
+                question: "Qual a forma canônica, ou seja, a maneira específica de escrever a equação da função afim (1º grau)?",
+                options: ["f(x) = ax² + bx + c", "f(x) = a/x + b", "f(x) = ax + b", "f(x) = x^a"],
+                correct: 2,
+                explanation: "A função do 1º grau é definida pela expressão f(x) = ax + b.",
+                points: 50,
+                difficulty: "Fácil",
+                hint: "É uma expressão onde o maior expoente de x é 1."
+            },
+            {
+                id: 36,
+                type: 'concept',
+                question: "Dada f(x) = 0,5x - 3, determine f(10).",
+                options: ["3", "2", "5", "0"],
+                correct: 1,
+                explanation: "f(10) = 0,5 * 10 - 3 = 5 - 3 = 2.",
+                points: 50,
+                difficulty: "Fácil",
+                hint: "Multiplicar por 0,5 é o mesmo que dividir por 2."
+            },
+            {
+                id: 37,
+                type: 'concept',
+                question: "Qual dessas funções representa uma reta horizontal?",
+                options: ["f(x) = 2x + 3", "f(x) = -x", "f(x) = 5", "f(x) = x + 5"],
+                correct: 2,
+                explanation: "Uma função constante (f(x) = b) gera uma reta horizontal, pois não há variação em y conforme x muda.",
+                points: 50,
+                difficulty: "Média",
+                hint: "Reta horizontal não possui o termo 'x' na função (ou a = 0)."
+            },
+            {
+                id: 38,
+                type: 'concept',
+                question: "Se o coeficiente angular (a) é zero, a função é chamada de:",
+                options: ["Linear", "Constante", "Identidade", "Inexistente"],
+                correct: 1,
+                explanation: "Quando a = 0, a função torna-se f(x) = b, que é uma função constante.",
+                points: 50,
+                difficulty: "Fácil",
+                hint: "O valor de y nunca muda, independente do x."
+            },
+            {
+                id: 39,
+                type: 'concept',
+                question: "Uma função passa por (1, 3) e (2, 5). Qual seu coeficiente angular?",
+                options: ["1", "3", "2", "4"],
+                correct: 2,
+                explanation: "a = (y2 - y1) / (x2 - x1) = (5 - 3) / (2 - 1) = 2 / 1 = 2.",
+                points: 50,
+                difficulty: "Difícil",
+                hint: "Use a fórmula: (Variação de y) dividido por (Variação de x)."
+            },
+            {
+                id: 40,
+                type: 'concept',
+                question: "Qual a raiz da função f(x) = 4x - 12?",
+                options: ["x = -3", "x = 3", "x = 4", "x = 12"],
+                correct: 1,
+                explanation: "4x - 12 = 0 -> 4x = 12 -> x = 3.",
+                points: 50,
+                difficulty: "Fácil",
+                hint: "Iguale a expressão a zero."
+            },
+            {
+                id: 41,
+                type: 'application',
+                question: "Um motorista cobra uma valor fixo de R$ 50 e R$ 60 por hora. Qual o valor total para ele trabalhar 8 horas?",
+                options: ["R$ 450", "R$ 420", "R$ 530", "R$ 600"],
+                correct: 2,
+                explanation: "Total = 50 + 60 * 8 = 50 + 480 = 530.",
+                points: 80,
+                difficulty: "Fácil",
+                hint: "60 vezes 8 é igual a 480 + 50 do fixo."
+            },
+            {
+                id: 42,
+                type: 'application',
+                question: "Um táxista cobra R$ 5,00 fixo e R$ 2,50 por km. Qual a função do custo C(x)?",
+                options: ["C(x) = 5x + 2,50", "C(x) = 7,50x", "C(x) = 2,50x + 5", "C(x) = 2,50x"],
+                correct: 2,
+                explanation: "C(x) = 2,50x + 5. O valor por km acompanha o x.",
+                points: 80,
+                difficulty: "Fácil",
+                hint: "O fixo é o termo sozinho (b)."
+            },
+            {
+                id: 43,
+                type: 'application',
+                question: "Uma fábrica tem o custo fixo R$ 1000 e R$ 8 por peça produzida. Qual o custo para produzir 200 peças?",
+                options: ["R$ 1600", "R$ 2000", "R$ 2600", "R$ 2800"],
+                correct: 2,
+                explanation: "C = 1000 + 8 * 200 = 1000 + 1600 = 2600.",
+                points: 80,
+                difficulty: "Média",
+                hint: "Multiplique 8 por 200 antes de somar os 1000."
+            },
+            {
+                id: 44,
+                type: 'application',
+                question: "Uma pequena empresa produz e vende camisetas. Cada camiseta é vendida por R$ 25,00. O custo para produzir cada camiseta é de R$ 10,00, e há um custo fixo mensal de R$ 500,00 (aluguel, luz, etc.). Quantas camisetas a empresa precisa vender para que o lucro seja zero (ou seja, não tenha prejuízo nem lucro)?",
+                options: ["20", "25", "33,33...", "50"],
+                correct: 2,
+                explanation: "25x = 10x + 500 -> 15x = 500 -> x = 33,33...",
+                points: 80,
+                difficulty: "Difícil",
+                hint: "Iguale a Receita (25x) ao Custo Total (10x + 500)."
+            },
+            {
+                id: 45,
+                type: 'application',
+                question: "Uma empresa de telefone tem o plano A: 30 + 0,50/min e o plano B: 20 + 0,75/min. Com quantos minutos os planos custam o mesmo valor?",
+                options: ["20 min", "30 min", "40 min", "50 min"],
+                correct: 2,
+                explanation: "30 + 0,5x = 20 + 0,75x -> 10 = 0,25x -> x = 40.",
+                points: 80,
+                difficulty: "Difícil",
+                hint: "Iguale as duas expressões e isole o x."
+            },
+            {
+                id: 46,
+                type: 'application',
+                question: "Um carro consome 1L a cada 10km. Se o tanque tem 50L, qual a autonomia total do carro?",
+                options: ["400 km", "500 km", "300 km", "600 km"],
+                correct: 1,
+                explanation: "Autonomia = Consumo * Tanque = 10 km/L * 50 L = 500 km.",
+                points: 80,
+                difficulty: "Fácil",
+                hint: "Basta multiplicar a eficiência pela capacidade do tanque."
+            },
+            {
+                id: 47,
+                type: 'application',
+                question: "Um estacionamento cobra R$ 10 por 2h e R$ 2 por hora extra. Quanto se pagará por ter estacionado 6h?",
+                options: ["R$ 20,00", "R$ 18,00", "R$ 22,00", "R$ 14,00"],
+                correct: 1,
+                explanation: "6h total - 2h iniciais = 4h extras. Total = 10 + (4 * 2) = 18.",
+                points: 80,
+                difficulty: "Média",
+                hint: "Cuidado: as primeiras 2 horas já estão inclusas nos R$ 10."
+            },
+            {
+                id: 48,
+                type: 'application',
+                question: "Imagine que você tem uma loja de camisetas. Cada camiseta é vendida por R$ 30. Seus custos são: R$ 10 de despesas fixas (aluguel, etc.) e R$ 15 para produzir cada camiseta. Se você vender 100 camisetas, qual será o lucro total?",
+                options: ["R$ 1500", "R$ 1490", "R$ 1000", "R$ 3000"],
+                correct: 1,
+                explanation: "Venda: 3000. Custo: 10 + 1500 = 1510. Lucro: 3000 - 1510 = 1490.",
+                points: 80,
+                difficulty: "Média",
+                hint: "Lucro é Venda total menos Custo total."
+            },
+            {
+                id: 49,
+                type: 'graph',
+                question: "Se um gráfico intercepta o eixo x em 4 e o eixo y em 8, qual é a função?",
+                options: ["f(x) = -2x + 8", "f(x) = 2x + 4", "f(x) = -2x + 4", "f(x) = 2x + 8"],
+                correct: 0,
+                explanation: "Raiz: x = 4, então f(4)=0. Intercepta y em 8: b = 8. a = -b/raiz = -8/4 = -2. Logo, f(x) = -2x + 8.",
+                points: 60,
+                difficulty: "Difícil",
+                hint: "Use as informações dos interceptos.",
+                hasImage: true,
+                imageAlt: "Gráfico que intercepta x=4 e y=8"
+            },
+            {
+                id: 50,
+                type: 'graph',
+                question: "Como é o gráfico da função f(x) = -3x + 6?",
+                options: ["Reta crescente cortando y em 6", "Reta decrescente cortando y em 6", "Reta horizontal em 6", "Reta decrescente cortando y em -3"],
+                correct: 1,
+                explanation: "a = -3 (decrescente) e b = 6 (intercepto y).",
+                points: 60,
+                difficulty: "Média",
+                hint: "Olhe para o sinal de 'a' e o valor de 'b'."
+            },
+            {
+                id: 51,
+                type: 'graph',
+                question: "Se uma função passa por (0, -2) e (2, 0), qual sua lei de formação?",
+                options: ["f(x) = x + 2", "f(x) = x - 2", "f(x) = 2x - 2", "f(x) = -x - 2"],
+                correct: 1,
+                explanation: "b = -2. Raiz x = 2. 0 = a(2) - 2 -> 2a = 2 -> a = 1. f(x) = x - 2.",
+                points: 60,
+                difficulty: "Média",
+                hint: "O ponto (0, -2) já te dá o valor de b."
+            },
+            {
+                id: 52,
+                type: 'graph',
+                question: "Qual função tem maior inclinação: f(x) = 5x + 1 ou g(x) = -5x + 1?",
+                options: ["f(x)", "g(x)", "Ambas têm a mesma inclinação", "Depende do valor de x"],
+                correct: 2,
+                explanation: "Ambas possuem o mesmo módulo de coeficiente angular (|5| e |-5|), portanto, a mesma inclinação.",
+                points: 60,
+                difficulty: "Média",
+                hint: "A inclinação é o 'grau de subida/descida', independente do sinal."
+            },
+            {
+                id: 53,
+                type: 'graph',
+                question: "O que retas paralelas possuem em comum?",
+                options: ["Mesmo coeficiente linear", "Mesmo coeficiente angular", "Mesma raiz", "Cruzam o mesmo ponto"],
+                correct: 1,
+                explanation: "Retas paralelas possuem a mesma inclinação, ou seja, o mesmo coeficiente angular (a).",
+                points: 60,
+                difficulty: "Média",
+                hint: "Para nunca se cruzarem, elas devem subir no mesmo ritmo."
+            },
+            {
+                id: 54,
+                type: 'concept',
+                question: "Qual a inclinação de uma reta vertical?",
+                options: ["Zero", "Um", "Indefinida", "Infinita"],
+                correct: 2,
+                explanation: "Uma reta vertical não possui coeficiente angular definido, pois a variação em x é zero (divisão por zero).",
+                points: 50,
+                difficulty: "Difícil",
+                hint: "Pense no teste da reta vertical para funções."
+            }
+        ];
+
+        function resetGame() {
+            if (confirm("Tem certeza que deseja encerrar o jogo atual e apagar todo o progresso?")) {
+                // 1. Para qualquer timer que esteja rodando
+                stopTimer();
+                
+                // 2. Limpa o armazenamento local específico do jogo
+                localStorage.removeItem('mathCards_save');
+                
+                // 3. Recarrega a página para voltar ao estado inicial (Setup Modal)
+                window.location.reload();
+            }
+        }
+
+        // ========== FUNÇÕES CORRIGIDAS ==========
+
+        // Função para parar timer com segurança
+        function stopTimer() {
+            if (gameState.timer) {
+                clearInterval(gameState.timer);
+                gameState.timer = null;
+            }
+            document.getElementById('headerTimer').classList.remove('active');
+            gameState.timerActive = false;
+            
+            // Resetar estilo
+            const timerElement = document.getElementById('headerTimerTime');
+            timerElement.style.color = '';
+            timerElement.style.fontWeight = '';
+        }
+
+        // Função para resetar estado do turno
+        function resetTurnState() {
+            stopTimer();
+            gameState.answerSubmitted = false;
+            gameState.responseStartTime = 0;
+        }
+
+        // Função para limpar carta da mesa
+        function clearCardFromTable() {
+            const container = document.getElementById('mainCardContainer');
+            container.innerHTML = `
+                <div class="no-card-message" id="noCardMessage" style="text-align: center; padding: 40px;">
+                    <div style="font-size: 4rem; color: var(--secondary-color); margin-bottom: 20px;">
+                        <i class="fas fa-drafting-compass"></i>
+                    </div>
+                    <h3>Clique em "Comprar Carta"</h3>
+                    <p>para começar seu turno</p>
+                </div>
+            `;
+        }
+
+        // CORREÇÃO: Função para calcular pontos - apenas combo multiplier
+        function calculatePoints(card, player) {
+            let basePoints = card.points;
+            
+            // Bônus fixo por combo (nova regra)
+            let comboBonus = 0;
+            if (player.streak >= 5) {
+                comboBonus = 25; // 5 acertos: 25 pontos
+            } else if (player.streak >= 4) {
+                comboBonus = 20; // 4 acertos: 20 pontos
+            } else if (player.streak >= 3) {
+                comboBonus = 15; // 3 acertos: 15 pontos
+            } else if (player.streak >= 2) {
+                comboBonus = 10; // 2 acertos: 10 pontos
+            }
+            
+            const totalPoints = basePoints + comboBonus;
+            
+            return { basePoints, comboBonus, totalPoints };
+        }
+
+        // CORREÇÃO CRÍTICA: Timer robusto
+        function startTimer() {
+            // 1. SEMPRE limpar timer existente primeiro
+            if (gameState.timer) {
+                clearInterval(gameState.timer);
+                gameState.timer = null;
+            }
+            
+            // 2. Verificar condições para iniciar timer
+            if (!gameState.gameActive || !gameState.cardOnTable || gameState.answerSubmitted) {
+                document.getElementById('headerTimer').classList.remove('active');
+                gameState.timerActive = false;
+                return;
+            }
+            
+            // 3. Inicializar timer
+            gameState.timeLeft = levelTimes[gameState.difficultyLevel];
+            const timerElement = document.getElementById('headerTimerTime');
+            const timerContainer = document.getElementById('headerTimer');
+            
+            timerElement.textContent = gameState.timeLeft + 's';
+            timerContainer.classList.add('active');
+            gameState.timerActive = true;
+            
+            // 4. Criar novo intervalo com verificação constante
+            gameState.timer = setInterval(() => {
+                // Verificar se ainda pode continuar a cada tick
+                if (!gameState.gameActive || !gameState.cardOnTable || gameState.answerSubmitted) {
+                    clearInterval(gameState.timer);
+                    timerContainer.classList.remove('active');
+                    gameState.timerActive = false;
+                    return;
+                }
+                
+                gameState.timeLeft--;
+                timerElement.textContent = gameState.timeLeft + 's';
+                
+                // Efeito visual
+                if (gameState.timeLeft <= 10) {
+                    timerElement.style.color = '#e74c3c';
+                    timerElement.style.fontWeight = 'bold';
+                }
+                
+                // Tempo esgotado
+                if (gameState.timeLeft <= 0) {
+                    clearInterval(gameState.timer);
+                    timerContainer.classList.remove('active');
+                    gameState.timerActive = false;
+                    timerElement.style.color = '';
+                    timerElement.style.fontWeight = '';
+                    
+                    // Resposta automática
+                    if (!gameState.answerSubmitted && gameState.cardOnTable && gameState.currentCard) {
+                        const card = gameState.currentCard;
+                        const player = gameState.players[gameState.currentPlayer];
+                        
+                        // Registrar resposta errada
+                        player.totalAnswers++;
+                        gameState.totalQuestions++;
+                        player.streak = 0;
+                        
+                        // Mostrar resultado
+                        showResultScreen(false, -1, null);
+                        showNotification(`⏰ Tempo esgotado! A resposta era: ${card.options[card.correct]}`, 'error');
+                        
+                        updatePlayersDisplay();
+                        updateStats();
+                        saveGameState();
+                        
+                        // Marcar como respondida para evitar duplicação
+                        gameState.answerSubmitted = true;
+                    }
+                }
+            }, 1000);
+        }
+
+        // Função para comprar carta (CORRIGIDA)
+        function drawCard() {
+            if (!gameState.gameActive) {
+                showNotification("O jogo não está ativo!", 'error');
+                return;
+            }
+            
+            if (gameState.cardOnTable) {
+                showNotification("Termine a carta atual antes de comprar uma nova!", 'warning');
+                return;
+            }
+            
+            if (gameState.deck.length === 0) {
+                showNotification("As cartas acabaram!", 'warning');
+                if (!gameState.practiceMode) endGame('cards');
+                return;
+            }
+
+            // 1. Parar qualquer timer anterior
+            stopTimer();
+            
+            // 2. Preparar novo turno
+            gameState.totalTurns++;
+            const card = gameState.deck.pop();
+            gameState.currentCard = card;
+            gameState.cardOnTable = true;
+            gameState.answerSubmitted = false;
+            gameState.responseStartTime = Date.now();
+
+            document.getElementById('drawCardBtn').disabled = true;
+            showQuestionModal(card);
+            
+            // 3. Iniciar timer apenas se as condições estiverem corretas
+            if (gameState.gameActive && gameState.cardOnTable && !gameState.answerSubmitted) {
+                startTimer();
+            }
+            
+            saveGameState();
+        }
+
+        // Função para mostrar modal de pergunta
+        function showQuestionModal(card) {
+            const modal = document.getElementById('interactionModal');
+            
+            // Mostrar tela de pergunta
+            document.getElementById('questionScreen').style.display = 'block';
+            document.getElementById('resultScreen').style.display = 'none';
+            
+            const options = card.options.map((option, index) => `
+                <button class="option-btn" data-index="${index}">
+                    <span class="option-letter">${String.fromCharCode(65 + index)}</span>
+                    <span class="option-text">${option}</span>
+                </button>
+            `).join('');
+            
+            const typeText = card.type === 'concept' ? '📚 Conceito' : 
+                            card.type === 'application' ? '💼 Aplicação' : '📈 Gráfico';
+            
+            const typeColor = card.type === 'concept' ? '#3498db' : 
+                             card.type === 'application' ? '#2ecc71' : '#e74c3c';
+            
+            let displayedPoints = card.points;
+            const currentPlayer = gameState.players[gameState.currentPlayer];
+            // Calcular bônus que será ganho SE acertar (streak atual + 1)
+            const tempStreak = currentPlayer.streak + 1;
+            const tempPlayer = { ...currentPlayer, streak: tempStreak };
+            const pointsDetail = calculatePoints(card, tempPlayer);
+            let bonusText = pointsDetail.comboBonus > 0 ? ` (+${pointsDetail.comboBonus} bônus)` : '';
+
+
+            document.getElementById('questionHeaderContent').innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 15px;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <div style="padding: 8px 16px; background: ${typeColor}; 
+                             color: white; border-radius: 20px; font-size: 0.95rem; font-weight: bold; display: flex; align-items: center; gap: 8px;">
+                            <i class="${card.type === 'concept' ? 'fas fa-book' : card.type === 'application' ? 'fas fa-briefcase' : 'fas fa-chart-line'}"></i>
+                            ${typeText}
+                        </div>
+                        
+                        <div class="level-badge level-${card.difficulty.toLowerCase()}">
+                            ${card.difficulty}
+                        </div>
+                    </div>
+                    
+                    <div class="question-points" id="questionPoints">
+                        ${displayedPoints} pts${bonusText}
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('questionText').textContent = card.question;
+            document.getElementById('answerOptions').innerHTML = options;
+            document.getElementById('hintContainer').style.display = 'none';
+            document.getElementById('submitAnswerBtn').disabled = true;
+            
+            // ADICIONAR IMAGEM SE EXISTIR
+            if (card.hasImage) {
+                const imageContainer = document.createElement('div');
+                imageContainer.id = 'questionImageContainer';
+                imageContainer.style.cssText = `
+                    margin: 20px 0;
+                    text-align: center;
+                    background: white;
+                    padding: 15px;
+                    border-radius: 10px;
+                    border: 2px solid ${typeColor};
+                `;
+                
+                // Substitua 'graph49.png' pelo nome real do arquivo
+                const imageUrl = `images/graph${card.id}.png`;
+                imageContainer.innerHTML = `
+                    <img src="${imageUrl}" 
+                         alt="${card.imageAlt || 'Gráfico da questão'}" 
+                         style="max-width: 100%; max-height: 300px; border-radius: 8px;"
+                         onerror="this.onerror=null; this.parentElement.innerHTML='<div style=\'color:#666; padding:20px;\'>Imagem não disponível</div>';">
+                    <div style="font-size: 0.9rem; color: #666; margin-top: 8px;">
+                        <i class="fas fa-chart-line"></i> Clique para ampliar
+                    </div>
+                `;
+                
+                // Adicionar evento de clique para ampliar
+                const questionText = document.getElementById('questionText');
+                questionText.parentNode.insertBefore(imageContainer, questionText.nextSibling);
+                
+                // Adicionar funcionalidade de ampliar
+                imageContainer.querySelector('img').addEventListener('click', function() {
+                    const modal = document.createElement('div');
+                    modal.style.cssText = `
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background: rgba(0,0,0,0.9);
+                        z-index: 9999;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        cursor: zoom-out;
+                    `;
+                    
+                    modal.innerHTML = `
+                        <img src="${this.src}" 
+                             alt="${this.alt}"
+                             style="max-width: 90%; max-height: 90%; border-radius: 10px; box-shadow: 0 10px 40px rgba(0,0,0,0.5);">
+                        <div style="position: absolute; top: 20px; right: 20px; color: white; font-size: 2rem; cursor: pointer;">
+                            <i class="fas fa-times"></i>
+                        </div>
+                    `;
+                    
+                    document.body.appendChild(modal);
+                    
+                    modal.addEventListener('click', function(e) {
+                        if (e.target.tagName === 'I' || e.target === this) {
+                            document.body.removeChild(modal);
+                        }
+                    });
+                });
+            }
+            
+            // Adicionar eventos às opções
+            document.querySelectorAll('.option-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.option-btn').forEach(b => {
+                        b.classList.remove('selected');
+                    });
+                    this.classList.add('selected');
+                    document.getElementById('submitAnswerBtn').disabled = false;
+                });
+            });
+            
+            modal.style.display = 'block';
+        }
+
+        // CORREÇÃO: Função para submeter resposta
+        function submitAnswer() {
+            // Verificar múltiplas condições antes de processar
+            if (gameState.answerSubmitted || !gameState.currentCard || !gameState.gameActive) {
+                showNotification("Resposta já processada ou jogo não ativo!", 'warning');
+                return;
+            }
+
+            const selected = document.querySelector('.option-btn.selected');
+            if (!selected) {
+                showNotification("Selecione uma opção!", 'warning');
+                return;
+            }
+
+            // 1. Parar timer imediatamente
+            stopTimer();
+            
+            // 2. Marcar como respondida
+            gameState.answerSubmitted = true;
+            
+            const selectedIndex = parseInt(selected.dataset.index);
+            const card = gameState.currentCard;
+            const isCorrect = selectedIndex === card.correct;
+            const player = gameState.players[gameState.currentPlayer];
+
+            // Cálculo de tempo
+            const currentTime = Date.now();
+            let diff = (currentTime - gameState.responseStartTime) / 1000;
+            if (gameState.responseStartTime <= 0 || diff > 120) diff = 2;
+            gameState.currentGameStats.responseTimes.push(diff);
+
+            player.totalAnswers++;
+            gameState.totalQuestions++;
+
+            let pointsDetail = null;
+            
+            if (isCorrect) {
+                gameState.currentGameStats.questionsByType[card.type]++;
+                
+                player.streak++;
+                if (player.streak > player.maxStreak) player.maxStreak = player.streak;
+
+                pointsDetail = calculatePoints(card, player);
+                player.score += pointsDetail.totalPoints;
+                player.lastScoreChange = pointsDetail.totalPoints;
+                
+                player.correctAnswers++;
+                gameState.correctAnswers++;
+            } else {
+                player.streak = 0;
+                player.lastScoreChange = 0;
+            }
+
+            showResultScreen(isCorrect, selectedIndex, pointsDetail);
+            updatePlayersDisplay();
+            updateStats();
+            saveGameState();
+        }
+
+        // Função para mostrar tela de resultado
+        function showResultScreen(isCorrect, selectedIndex, pointsDetail) {
+            const card = gameState.currentCard;
+            const player = gameState.players[gameState.currentPlayer];
+            
+            document.getElementById('questionScreen').style.display = 'none';
+            document.getElementById('resultScreen').style.display = 'block';
+            
+            const resIcon = document.getElementById('resultIcon');
+            const resTitle = document.getElementById('resultTitle');
+
+            if (isCorrect) {
+                resIcon.innerHTML = '<i class="fas fa-check-circle"></i>';
+                resIcon.className = 'result-icon correct';
+                resTitle.textContent = 'Resposta Correta!';
+            } else {
+                resIcon.innerHTML = '<i class="fas fa-times-circle"></i>';
+                resIcon.className = 'result-icon incorrect';
+                resTitle.textContent = 'Resposta Incorreta';
+            }
+            
+            document.getElementById('explanationText').innerHTML = `<p>${card.explanation}</p>`;
+            
+            if (!isCorrect) {
+                document.getElementById('correctAnswerBox').style.display = 'block';
+                document.getElementById('correctAnswerText').textContent = card.options[card.correct];
+            } else {
+                document.getElementById('correctAnswerBox').style.display = 'none';
+            }
+            
+            document.getElementById('currentScore').textContent = player.score + ' pontos';
+            
+            // --- EXIBIÇÃO DETALHADA PEDIDA ---
+            const scoreChangeText = document.getElementById('scoreChangeText');
+            if (isCorrect && pointsDetail) {
+                let html = `<div style="font-size: 1rem; opacity: 0.9;">`;
+                html += `Base: ${pointsDetail.basePoints} pts`;
+                if (pointsDetail.comboBonus > 0) {
+                    html += `<br>Combo (${player.streak}): +${pointsDetail.comboBonus} pts`;
+                    }
+                html += `</div><div style="font-size: 1.8rem; font-weight: bold; margin-top: 5px;">Total: +${pointsDetail.totalPoints} pts</div>`;
+                scoreChangeText.innerHTML = html;
+                scoreChangeText.style.color = '#2ecc71';
+            } else {
+                scoreChangeText.textContent = '+0 pontos';
+                scoreChangeText.style.color = '#e74c3c';
+            }
+            
+            const optionBtns = document.querySelectorAll('.option-btn');
+            optionBtns.forEach((btn, index) => {
+                if (index === card.correct) btn.classList.add('correct');
+                else if (index === selectedIndex && !isCorrect) btn.classList.add('incorrect');
+                btn.disabled = true;
+            });
+        }
+
+        // CORREÇÃO: Função para próximo jogador
+        function nextPlayer() {
+            // 1. Parar timer
+            stopTimer();
+            
+            // 2. Verificar vitória
+            const currentPlayerObj = gameState.players[gameState.currentPlayer];
+            if (!gameState.practiceMode && currentPlayerObj.score >= gameState.maxScore) {
+                endGame('points');
+                return;
+            }
+
+            const modal = document.getElementById('interactionModal');
+            modal.style.display = 'none';
+            
+            // 3. Resetar estado do turno
+            gameState.cardOnTable = false;
+            gameState.currentCard = null;
+            gameState.answerSubmitted = false;
+            gameState.responseStartTime = 0;
+            
+            document.getElementById('drawCardBtn').disabled = false;
+            clearCardFromTable();
+            
+            // 4. Passar para próximo jogador (se não for modo prática)
+            if (!gameState.practiceMode) {
+                gameState.currentPlayer = (gameState.currentPlayer + 1) % gameState.players.length;
+            }
+            
+            updatePlayersDisplay();
+            saveGameState();
+            
+            showNotification(`Turno de ${gameState.players[gameState.currentPlayer].name}`, 'info');
+        }
+
+        // Sistema de salvamento (ATUALIZADO)
+        function saveGameState() {
+            const saveData = {
+                players: gameState.players,
+                currentPlayer: gameState.currentPlayer,
+                deck: gameState.deck,
+                currentCard: gameState.currentCard,
+                gameActive: gameState.gameActive,
+                timeLeft: gameState.timeLeft,
+                totalQuestions: gameState.totalQuestions,
+                correctAnswers: gameState.correctAnswers,
+                totalTurns: gameState.totalTurns,
+                maxScore: gameState.maxScore,
+                gameId: gameState.gameId,
+                playerCount: playerCount,
+                turnTime: parseInt(document.getElementById('turnTime').value),
+                practiceMode: gameState.practiceMode,
+                difficultyLevel: gameState.difficultyLevel,
+                currentGameStats: gameState.currentGameStats,
+                
+                // NOVOS CAMPOS SALVOS:
+                cardOnTable: gameState.cardOnTable,
+                answerSubmitted: gameState.answerSubmitted,
+                responseStartTime: gameState.responseStartTime,
+                timerActive: gameState.timerActive
+            };
+            
+            try {
+                localStorage.setItem('mathCards_save', JSON.stringify(saveData));
+            } catch (e) {
+                console.error("Erro ao salvar jogo:", e);
+            }
+        }
+
+        // CORREÇÃO: Carregar estado do jogo (com reset de estados)
+        function loadGameState() {
+            try {
+                const savedData = localStorage.getItem('mathCards_save');
+                if (!savedData) {
+                    showNotification("Nenhum jogo salvo encontrado!", 'warning');
+                    return false;
+                }
+                
+                const data = JSON.parse(savedData);
+                
+                // Restaurar todos os campos
+                gameState.players = data.players;
+                gameState.currentPlayer = data.currentPlayer;
+                gameState.deck = data.deck;
+                gameState.currentCard = data.currentCard;
+                gameState.gameActive = data.gameActive;
+                gameState.timeLeft = data.timeLeft;
+                gameState.totalQuestions = data.totalQuestions;
+                gameState.correctAnswers = data.correctAnswers;
+                gameState.totalTurns = data.totalTurns;
+                gameState.maxScore = data.maxScore;
+                gameState.gameId = data.gameId;
+                gameState.practiceMode = data.practiceMode || false;
+                gameState.difficultyLevel = data.difficultyLevel || 'intermediate';
+                gameState.currentGameStats = data.currentGameStats || {
+                    gameStartTime: new Date(),
+                    gameEndTime: null,
+                    questionsByType: {
+                        concept: 0,
+                        application: 0,
+                        graph: 0
+                    },
+                    responseTimes: [],
+                    hintsUsed: 0,
+                    mistakesHistory: []
+                };
+                
+                // NOVOS CAMPOS CARREGADOS:
+                gameState.cardOnTable = data.cardOnTable || false;
+                gameState.answerSubmitted = data.answerSubmitted || false;
+                gameState.responseStartTime = data.responseStartTime || 0;
+                gameState.timerActive = data.timerActive || false;
+                
+                // CORREÇÃO: Resetar estados se jogo não está ativo
+                if (!gameState.gameActive) {
+                    gameState.cardOnTable = false;
+                    gameState.currentCard = null;
+                    gameState.answerSubmitted = false;
+                    gameState.timerActive = false;
+                    stopTimer();
+                }
+                
+
+                // Dentro de loadGameState, após carregar os dados:
+                if (gameState.gameActive && gameState.cardOnTable && !gameState.answerSubmitted) {
+                   // Se havia uma carta sendo respondida, reinicia o timer
+                    startTimer(); 
+                } else {
+                // Se não, garante que o timer esteja parado
+                    stopTimer();
+                }
+                
+                // Restaurar configurações
+                playerCount = data.playerCount || 2;
+                document.getElementById('playerCount').textContent = playerCount;
+                document.getElementById('turnTime').value = data.turnTime || 30;
+                document.getElementById('timeValue').textContent = (data.turnTime || 30) + 's';
+                
+                // Atualizar botão de nível ativo
+                document.querySelectorAll('.level-selector').forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.dataset.level === gameState.difficultyLevel) {
+                        btn.classList.add('active');
+                    }
+                });
+                
+                // Gerar inputs com nomes salvos
+                generatePlayerInputs(playerCount);
+                gameState.players.forEach((player, index) => {
+                    const input = document.getElementById(`player${index + 1}Name`);
+                    if (input) {
+                        input.value = player.name;
+                    }
+                });
+                
+                // CORREÇÃO: Atualizar interface baseada no estado
+                if (gameState.cardOnTable && gameState.currentCard) {
+                    document.getElementById('drawCardBtn').disabled = true;
+                    // Recriar a carta na mesa
+                    showQuestionModal(gameState.currentCard);
+                } else {
+                    document.getElementById('drawCardBtn').disabled = false;
+                    clearCardFromTable();
+                }
+                
+                // Atualizar interface
+                updatePlayersDisplay();
+                updateStats();
+                updateLevelDisplay();
+                
+                // Esconder modal de setup
+                document.getElementById('setupModal').style.display = 'none';
+                
+                // Mostrar botão de comprar carta
+                document.getElementById('drawCardBtn').style.display = 'inline-flex';
+                
+                showNotification("Jogo carregado com sucesso!", 'success');
+                return true;
+                
+            } catch (e) {
+                console.error("Erro ao carregar jogo:", e);
+                showNotification("Erro ao carregar jogo salvo!", 'error');
+                return false;
+            }
+        }
+
+        // CORREÇÃO: Função para terminar jogo
+        function endGame(reason) {
+            // 1. Parar timer definitivamente
+            stopTimer();
+            
+            // 2. Marcar jogo como inativo
+            gameState.gameActive = false;
+            gameState.cardOnTable = false;
+            gameState.currentGameStats.gameEndTime = new Date();
+            
+            // 3. Determinar vencedor
+            let winner = gameState.players[0];
+            gameState.players.forEach(p => {
+                if (p.score > winner.score) winner = p;
+            });
+
+            // 4. Preparar interface final
+            const modal = document.getElementById('interactionModal');
+            document.getElementById('questionScreen').style.display = 'none';
+            const resultScreen = document.getElementById('resultScreen');
+            resultScreen.style.display = 'block';
+
+            // 5. Calcular estatísticas
+            const accuracy = gameState.totalQuestions > 0
+                ? Math.round((gameState.correctAnswers / gameState.totalQuestions) * 100)
+                : 0;
+
+            const totalResponded = gameState.currentGameStats.responseTimes.length;
+            const sumTime = gameState.currentGameStats.responseTimes.reduce((a, b) => a + b, 0);
+            const avgTime = totalResponded > 0 ? (sumTime / totalResponded).toFixed(1) : "0.0";
+
+            // 6. Mostrar resultado final
+            document.getElementById('resultIcon').innerHTML = '<i class="fas fa-trophy" style="color: #f1c40f; font-size: 4rem;"></i>';
+            document.getElementById('resultTitle').innerHTML = `VITÓRIA DE ${winner.name.toUpperCase()}!`;
+            document.getElementById('resultTitle').className = 'result-title correct';
+
+            document.getElementById('explanationText').innerHTML = `
+                <div style="text-align: center; background: rgba(0,0,0,0.1); padding: 15px; border-radius: 10px;">
+                    <p style="margin-bottom: 10px;">Motivo: <strong>${reason === 'points' ? 'Pontuação máxima atingida!' : 'Cartas esgotadas!'}</strong></p>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 0.9rem;">
+                        <div style="padding: 10px; border: 1px solid rgba(255,255,255,0.1)">
+                            <div style="font-size: 1.2rem; font-weight: bold;">${gameState.totalQuestions}</div>
+                            Perguntas
+                        </div>
+                        <div style="padding: 10px; border: 1px solid rgba(255,255,255,0.1)">
+                            <div style="font-size: 1.2rem; font-weight: bold;">${accuracy}%</div>
+                            Precisão
+                        </div>
+                        <div style="padding: 10px; border: 1px solid rgba(255,255,255,0.1)">
+                            <div style="font-size: 1.2rem; font-weight: bold;">${avgTime}s</div>
+                            Tempo Médio
+                        </div>
+                        <div style="padding: 10px; border: 1px solid rgba(255,255,255,0.1)">
+                            <div style="font-size: 1.2rem; font-weight: bold;">${winner.score}</div>
+                            Pontos
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('correctAnswerBox').style.display = 'none';
+            document.querySelector('.score-change').style.display = 'none';
+            document.getElementById('drawCardBtn').style.display = 'none';
+
+            const nextBtn = document.getElementById('nextPlayerBtn');
+            nextBtn.innerHTML = '<i class="fas fa-redo"></i> JOGAR NOVAMENTE';
+            nextBtn.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
+            
+            // O pulo do gato: ao clicar, apaga o save e recarrega
+            nextBtn.onclick = function() {
+                localStorage.removeItem('mathCards_save');
+                window.location.reload();
+            };
+
+            // 8. Exibir o Modal
+            modal.style.display = 'block';
+            clearCardFromTable();
+        }
+
+        // ========== FUNÇÕES AUXILIARES (mantidas como estão) ==========
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 15px 25px;
+                background: ${type === 'success' ? 'rgba(46, 204, 113, 0.9)' : 
+                           type === 'error' ? 'rgba(231, 76, 60, 0.9)' : 
+                           type === 'warning' ? 'rgba(243, 156, 18, 0.9)' : 'rgba(52, 152, 219, 0.9)'};
+                color: white;
+                border-radius: 8px;
+                z-index: 9999;
+                animation: slideIn 0.3s ease;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+                max-width: 400px;
+                word-wrap: break-word;
+            `;
+            
+            notification.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : 
+                                type === 'error' ? 'exclamation-circle' : 
+                                type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i>
+                <span style="margin-left: 10px;">${message}</span>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+            
+            if (!document.getElementById('notification-styles')) {
+                const style = document.createElement('style');
+                style.id = 'notification-styles';
+                style.textContent = `
+                    @keyframes slideIn {
+                        from { transform: translateX(100%); opacity: 0; }
+                        to { transform: translateX(0); opacity: 1; }
+                    }
+                    @keyframes slideOut {
+                        from { transform: translateX(0); opacity: 1; }
+                        to { transform: translateX(100%); opacity: 0; }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+        }
+
+        function updateStats() {
+            document.getElementById('totalQuestions').textContent = gameState.totalQuestions;
+            document.getElementById('correctAnswers').textContent = gameState.correctAnswers;
+        }
+
+        function getLevelName(level) {
+            const names = {
+                beginner: 'Iniciante',
+                intermediate: 'Intermediário',
+                advanced: 'Avançado'
+            };
+            return names[level] || 'Intermediário';
+        }
+
+        function updateLevelDisplay() {
+            const levelElement = document.getElementById('currentLevel');
+            const levelName = getLevelName(gameState.difficultyLevel);
+            const levelClass = `level-${gameState.difficultyLevel}`;
+            
+            levelElement.textContent = levelName;
+            levelElement.className = `level-badge ${levelClass}`;
+        }
+
+        function updatePlayersDisplay() {
+            const container = document.getElementById('playersInfo');
+            container.innerHTML = gameState.players.map((player, index) => {
+                const isActive = gameState.practiceMode || index === gameState.currentPlayer;
+                const streakText = player.streak > 1 ? ` 🔥 ${player.streak}` : '';
+                
+                return `
+                <div class="player-card ${isActive ? 'active' : ''}">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <div style="width: 40px; height: 40px; border-radius: 50%; background: ${player.color}; 
+                             display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">
+                            ${player.name.charAt(0).toUpperCase()}
+                        </div>
+                        <div style="flex: 1;">
+                            <div style="font-weight: bold;">${player.name}</div>
+                            <div style="font-size: 0.9rem; opacity: 0.8;">${player.score} pontos</div>
+                            <div style="font-size: 0.8rem; opacity: 0.7;">
+                                ${player.correctAnswers}/${player.totalAnswers} acertos${streakText}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="player-progress">
+                        <div class="player-progress-fill" style="width: ${Math.min((player.score / gameState.maxScore) * 100, 100)}%"></div>
+                    </div>
+                </div>
+                `;
+            }).join('');
+        }
+
+        // ========== INICIALIZAÇÃO DO JOGO ==========
+
+        function initializeGame() {
+            console.log("Inicializando jogo...");
+            
+            // Coletar nomes dos jogadores
+            const playerNames = [];
+            
+            for (let i = 1; i <= playerCount; i++) {
+                const input = document.getElementById(`player${i}Name`);
+                const name = input ? input.value.trim() : '';
+                playerNames.push(name || `Jogador ${i}`);
+            }
+            
+            // Validar nomes únicos
+            const uniqueNames = new Set(playerNames);
+            if (uniqueNames.size < playerNames.length) {
+                showNotification("Os nomes dos jogadores devem ser únicos!", 'error');
+                return;
+            }
+            
+            // Inicializar jogadores
+            gameState.players = playerNames.map((name, index) => ({
+                id: index + 1,
+                name: name,
+                score: 0,
+                color: playerColors[index],
+                active: true,
+                correctAnswers: 0,
+                totalAnswers: 0,
+                streak: 0,
+                maxStreak: 0,
+                lastScoreChange: 0,
+                doublePointsUsed: false,
+                gameStats: {
+                    fastAnswers: 0,
+                    conceptCorrect: 0,
+                    conceptTotal: 0,
+                    applicationCorrect: 0,
+                    applicationTotal: 0,
+                    graphCorrect: 0,
+                    graphTotal: 0
+                }
+            }));
+            
+            gameState.difficultyLevel = document.querySelector('.level-selector.active').dataset.level;
+gameState.timeLeft = levelTimes[gameState.difficultyLevel]; 
+            // CORREÇÃO: Usar filtros de dificuldade reais
+gameState.deck = allCards.filter(difficultyFilters[gameState.difficultyLevel]);
+            
+            // Embaralhar cartas
+          for (let i = gameState.deck.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [gameState.deck[i], gameState.deck[j]] = [gameState.deck[j], gameState.deck[i]];
+}
+            
+            gameState.gameActive = true;
+            gameState.currentPlayer = 0;
+            gameState.totalQuestions = 0;
+            gameState.correctAnswers = 0;
+            gameState.totalTurns = 0;
+            gameState.practiceMode = false;
+            gameState.cardOnTable = false;
+            gameState.answerSubmitted = false;
+            gameState.timerActive = false;
+            
+            // Atualizar interface
+            updatePlayersDisplay();
+            updateStats();
+            updateLevelDisplay();
+            
+            // Esconder modal de setup
+            document.getElementById('setupModal').style.display = 'none';
+            document.getElementById('drawCardBtn').style.display = 'inline-flex';
+            document.getElementById('drawCardBtn').disabled = false;
+            
+            // Limpar carta da mesa
+            clearCardFromTable();
+            
+            // Salvar estado
+            saveGameState();
+            
+showNotification(`${gameState.players[gameState.currentPlayer].name} começa! Nível: ${getLevelName(gameState.difficultyLevel)}. ${gameState.deck.length} cartas no deck.`, 'info');
+        }
+
+        // ========== EVENT LISTENERS ==========
+
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // Ligar a função ao botão
+            document.getElementById('resetGameBtn').addEventListener('click', resetGame);
+
+            // Carregar configurações
+            const savedTheme = localStorage.getItem('mathCards_theme');
+            if (savedTheme) {
+                document.body.className = savedTheme;
+                gameState.theme = savedTheme;
+            }
+            
+            // Gerar inputs de jogadores
+            function generatePlayerInputs(count) {
+                const container = document.getElementById('dynamicPlayerInputs');
+                container.innerHTML = '';
+                container.style.display = 'grid';
+                container.style.gridTemplateColumns = 'repeat(2, 1fr)';
+                container.style.gap = '15px';
+                
+                if (count > 4) {
+                    container.style.gridTemplateColumns = 'repeat(3, 1fr)';
+                }
+                
+                for (let i = 1; i <= count; i++) {
+                    const playerInput = document.createElement('div');
+                    playerInput.className = 'player-input';
+                    playerInput.innerHTML = `
+                        <label>Jogador ${i}</label>
+                        <input type="text" id="player${i}Name" value="Jogador ${i}" maxlength="12">
+                    `;
+                    container.appendChild(playerInput);
+                }
+            }
+            
+            generatePlayerInputs(playerCount);
+            
+            // Configurar controle de tempo
+            document.getElementById('turnTime').addEventListener('input', function() {
+                document.getElementById('timeValue').textContent = this.value + 's';
+            });
+            
+            // Controles de número de jogadores
+            document.getElementById('increasePlayers').addEventListener('click', function() {
+                if (playerCount < 8) {
+                    playerCount++;
+                    document.getElementById('playerCount').textContent = playerCount;
+                    generatePlayerInputs(playerCount);
+                }
+            });
+            
+            document.getElementById('decreasePlayers').addEventListener('click', function() {
+                if (playerCount > 2) {
+                    playerCount--;
+                    document.getElementById('playerCount').textContent = playerCount;
+                    generatePlayerInputs(playerCount);
+                }
+            });
+            
+            // Seletores de nível
+            document.querySelectorAll('.level-selector').forEach(button => {
+                button.addEventListener('click', function() {
+                    document.querySelectorAll('.level-selector').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    
+                    const time = this.dataset.time;
+                    document.getElementById('turnTime').value = time;
+                    document.getElementById('timeValue').textContent = time + 's';
+                });
+            });
+            
+            // Seletores de tema
+            document.querySelectorAll('.theme-selector, .theme-selector-modal').forEach(button => {
+                button.addEventListener('click', function() {
+                    const theme = this.dataset.theme;
+                    document.body.className = theme;
+                    gameState.theme = theme;
+                    localStorage.setItem('mathCards_theme', theme);
+                    updatePlayersDisplay();
+                });
+            });
+            
+            // Botão iniciar jogo
+            document.getElementById('startGameBtn').addEventListener('click', function() {
+                function validatePlayerNames() {
+                    let valid = true;
+                    const names = [];
+                
+                    for (let i = 1; i <= playerCount; i++) {
+                        const input = document.getElementById(`player${i}Name`);
+                        const name = input.value.trim();
+                    
+                        if (!name) {
+                            input.classList.add('error');
+                            valid = false;
+                        } else if (names.includes(name)) {
+                            input.classList.add('error');
+                            showNotification(`Nome "${name}" está duplicado!`, 'error');
+                            valid = false;
+                        } else {
+                            names.push(name);
+                        }
+                    }
+                
+                    return valid;
+                }
+                
+                if (validatePlayerNames()) {
+                    initializeGame();
+                }
+            });
+            
+            // Botão comprar carta
+            document.getElementById('drawCardBtn').addEventListener('click', drawCard);
+            
+            // Botão submeter resposta
+            document.getElementById('submitAnswerBtn').addEventListener('click', submitAnswer);
+            
+            // Botão próximo jogador
+            document.getElementById('nextPlayerBtn').addEventListener('click', nextPlayer);
+            
+            // Botão personalização
+            document.getElementById('customizationBtn').addEventListener('click', function() {
+                document.getElementById('customizationModal').classList.add('active');
+            });
+            
+            // Botões de fechar modais
+            document.getElementById('closeCustomizationBtn').addEventListener('click', function() {
+                document.getElementById('customizationModal').classList.remove('active');
+            });
+            
+            document.getElementById('closeCustomizationBtn2').addEventListener('click', function() {
+                document.getElementById('customizationModal').classList.remove('active');
+            });
+            
+            // Botões de revisão
+            document.getElementById('reviewConceptsBtn').addEventListener('click', function() {
+                document.getElementById('conceptsModal').classList.add('active');
+            });
+            
+            document.getElementById('reviewGraphsBtn').addEventListener('click', function() {
+                document.getElementById('graphsModal').classList.add('active');
+            });
+            
+            document.getElementById('instructionsBtn').addEventListener('click', function() {
+                document.getElementById('instructionsModal').classList.add('active');
+            });
+            
+            // Botões de fechar modais de revisão
+            document.getElementById('closeConceptsBtn').addEventListener('click', function() {
+                document.getElementById('conceptsModal').classList.remove('active');
+            });
+            
+            document.getElementById('closeConceptsBtn2').addEventListener('click', function() {
+                document.getElementById('conceptsModal').classList.remove('active');
+            });
+            
+            document.getElementById('closeGraphsBtn').addEventListener('click', function() {
+                document.getElementById('graphsModal').classList.remove('active');
+            });
+            
+            document.getElementById('closeGraphsBtn2').addEventListener('click', function() {
+                document.getElementById('graphsModal').classList.remove('active');
+            });
+            
+            document.getElementById('closeInstructionsBtn').addEventListener('click', function() {
+                document.getElementById('instructionsModal').classList.remove('active');
+            });
+            
+            document.getElementById('closeInstructionsBtn2').addEventListener('click', function() {
+                document.getElementById('instructionsModal').classList.remove('active');
+            });
+            
+            // Botão modo prática
+            document.getElementById('practiceModeBtn').addEventListener('click', function() {
+                function validatePlayerNames() {
+                    let valid = true;
+                    const names = [];
+                
+                    for (let i = 1; i <= playerCount; i++) {
+                        const input = document.getElementById(`player${i}Name`);
+                        const name = input.value.trim();
+                    
+                        if (!name) {
+                            input.classList.add('error');
+                            valid = false;
+                        } else if (names.includes(name)) {
+                            input.classList.add('error');
+                            showNotification(`Nome "${name}" está duplicado!`, 'error');
+                            valid = false;
+                        } else {
+                            names.push(name);
+                        }
+                    }
+                
+                    return valid;
+                }
+                
+                if (validatePlayerNames()) {
+                    // Modo prática simplificado
+                    const playerName = document.getElementById('player1Name').value.trim() || "Praticante";
+                    gameState.players = [{
+                        id: 1,
+                        name: playerName,
+                        score: 0,
+                        color: playerColors[0],
+                        active: true,
+                        correctAnswers: 0,
+                        totalAnswers: 0,
+                        streak: 0,
+                        maxStreak: 0,
+                        lastScoreChange: 0,
+                        doublePointsUsed: false,
+                        gameStats: {
+                            fastAnswers: 0,
+                            conceptCorrect: 0,
+                            conceptTotal: 0,
+                            applicationCorrect: 0,
+                            applicationTotal: 0,
+                            graphCorrect: 0,
+                            graphTotal: 0
+                        }
+                    }];
+                    
+                    gameState.difficultyLevel = document.querySelector('.level-selector.active').dataset.level;
+gameState.timeLeft = levelTimes[gameState.difficultyLevel];
+
+// Usar filtros de dificuldade
+gameState.deck = allCards.filter(difficultyFilters[gameState.difficultyLevel]);
+                    for (let i = gameState.deck.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [gameState.deck[i], gameState.deck[j]] = [gameState.deck[j], gameState.deck[i]];
+                    }
+                    
+                    gameState.gameActive = true;
+                    gameState.currentPlayer = 0;
+                    gameState.totalQuestions = 0;
+                    gameState.correctAnswers = 0;
+                    gameState.totalTurns = 0;
+                    gameState.practiceMode = true;
+                    gameState.cardOnTable = false;
+                    gameState.answerSubmitted = false;
+                    gameState.timerActive = false;
+                    
+                    updatePlayersDisplay();
+                    updateStats();
+                    updateLevelDisplay();
+                    
+                    document.getElementById('setupModal').style.display = 'none';
+                    document.getElementById('drawCardBtn').style.display = 'inline-flex';
+                    document.getElementById('drawCardBtn').disabled = false;
+                    
+                    clearCardFromTable();
+                    saveGameState();
+                    
+                    showNotification(`${playerName} iniciou o modo prática! Nível: ${getLevelName(gameState.difficultyLevel)}`, 'info');
+                }
+            });
+            
+            // Botão carregar jogo
+            document.getElementById('loadGameBtn').addEventListener('click', loadGameState);
+            
+            // Fechar modais clicando fora
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        this.classList.remove('active');
+                    }
+                });
+            });
+
+            // Verificar se há jogo salvo
+            const hasSavedGame = localStorage.getItem('mathCards_save');
+            if (!hasSavedGame) {
+                document.getElementById('setupModal').style.display = 'flex';
+            }
+
+        });
+    </script>
+<footer style="text-align: center; padding: 20px; margin-top: 40px; 
+              background: rgba(0,0,0,0.05); border-top: 1px solid rgba(0,0,0,0.1);">
+    <div style="font-size: 0.9rem; color: #666;">
+        <p>© 2026 Sergio Eric Reis de Oliveira - Trabalho de Conclusão de Curso</p>
+        <p>Licenciado sob <a href="LICENSE" style="color: #3498db;">MIT License</a> | 
+           Código disponível em <a href="https://github.com/profsergioericmatematica/TCC-Jogo-Educativo-Funcoes-AFIM.git" 
+           style="color: #3498db;">GitHub</a></p>
+    </div>
+</footer>
+</body>
+</html>
