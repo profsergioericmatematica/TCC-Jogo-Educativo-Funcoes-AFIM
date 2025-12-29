@@ -8,8 +8,8 @@ Trabalho de Conclusão de Curso desenvolvido como parte dos requisitos para obte
 
 **Título Completo:** "A Gamificação no Ensino da Matemática: Desenvolvimento e Aplicação de uma Ferramenta Interativa para o Estudo de Funções do 1º Grau. "
 
-**Autor:** [SEU NOME COMPLETO]
-**Orientador:** [NOME DO ORIENTADOR]
+**Autores:** Antonio Antunes Junior, Giovani Machado de Lima, Priscilla Santiago Zamorra, Rodrigo Aires de Medeiros Correa, Sergio Eric Reis de Oliveira e Vitor Correa Uberti 
+**Orientador:** Ainda a ser definido
 **Ano:** 2026
 
 ## 🎮 Sobre o Jogo
