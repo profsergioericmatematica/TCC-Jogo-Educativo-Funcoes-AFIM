@@ -58,4 +58,4 @@ Este jogo pode ser utilizado por:
 - **Alunos**: Para estudo individual e reforço de aprendizagem
 - **Grupos de estudo**: Para aprendizagem colaborativa
 
-## 📁 Estrutura do Projeto
+
