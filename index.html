@@ -31,6 +31,8 @@
             --card-border: #bdc3c7;
             --dark-color: #2c3e50;
             --light-color: #ecf0f1;
+            --hint-important: #f1c40f;  /* Amarelo para avisos importantes */
+            --hint-normal: #3498db;     /* Azul para informações normais */
         }
 
         /* Tema Escuro */
@@ -55,6 +57,8 @@
             --warning-color: #f39c12;
             --dark-color: #2c3e50;
             --light-color: #ecf0f1;
+            --hint-important: #d35400;  /* Laranja escuro */
+            --hint-normal: #2980b9;     /* Azul mais escuro */
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             color: #2c3e50;
         }
@@ -68,6 +72,8 @@
             --warning-color: #f0e442;
             --dark-color: #333333;
             --light-color: #f5f5f5;
+            --hint-important: #f06442;  /* Laranja/vermelho */
+            --hint-normal: #004488; 
             background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
             color: #333333;
         }
@@ -81,10 +87,10 @@
 
         /* ========== CONTAINER PRINCIPAL ========== */
         .container {
-            width: 95%;
-            max-width: 1800px;
+            width: 90%;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 0 15px;
+            padding: 0 15px;           
         }
 
         /* ========== HEADER/CABEÇALHO ========== */
@@ -997,12 +1003,12 @@
                                  background-clip: text; 
                                  color: transparent;
                                  font-weight: bold;
-                                 font-size: 1.8rem;">
+                                 font-size: 1.9rem;">
                         Enfim, Afim: Funções do 1º grau em Ação
                         <i class="fas fa-gamepad"></i>
                     </span>
                 </div>
-                <div style="font-size: 1.2rem; opacity: 0.9; margin-bottom: 5px;">
+                <div style="font-size: 1rem; opacity: 0.9; margin-bottom: 5px;">
                     Configuração do Jogo
                 </div>
             </h2>
@@ -1042,10 +1048,20 @@
                     <i></i>
                     </button>
                     <!-- Modo Prática -->
-                    <button class="action-btn secondary" id="practiceModeBtn" style="width: 40%;">
-                        <i class="fas fa-graduation-cap"></i> Modo Prática
-                    </button>
-                    
+                    <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1);">
+                        <button class="action-btn secondary" id="practiceModeBtn" style="width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 15px;">
+                            <div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+                                <i class="fas fa-graduation-cap"></i>
+                                <span>Modo Prática - Individual</span>
+                            </div>
+                            <p style="font-size: 0.85rem; color: var(--hint-important); text-align: center; margin-top: 8px; font-style: italic; margin-bottom: 0; font-weight: 500;">
+                                Antes de clicar "Modo Prática - Individual" para praticar, escolha o nível de dificuldade que deseja praticar
+                            </p>
+                            <p style="font-size: 0.85rem; color: var(--hint-normal); text-align: center; margin-top: 8px; font-style: italic; margin-bottom: 0;">
+                                Se for jogar contra um adversário, escolha o nível de dificuldade e clique em "Iniciar Jogo"
+                            </p>
+                        </button>
+                    </div>
 
                 </div>
             </div>
