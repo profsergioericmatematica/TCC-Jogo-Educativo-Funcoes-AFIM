@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+    <!-- METADADOS DA PÁGINA -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Enfim, Afim: Funções do 1º grau em Ação</title>
+
+    <!-- FONT AWESOME PARA ÍCONES -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
+    
+    <!-- ESTILOS CSS -->
+     <style>
+        /* ========== RESET E CONFIGURAÇÕES GERAIS ========== */
         * {
             margin: 0;
             padding: 0;
@@ -13,7 +19,9 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
+        /* ========== VARIÁVEIS CSS (THEMES) ========== */
         :root {
+            /* Tema Escuro (Padrão) */
             --primary-color: #2c3e50;
             --secondary-color: #3498db;
             --accent-color: #e74c3c;
@@ -25,6 +33,7 @@
             --light-color: #ecf0f1;
         }
 
+        /* Tema Escuro */
         body.theme-dark {
             --primary-color: #2c3e50;
             --secondary-color: #3498db;
@@ -37,6 +46,7 @@
             color: white;
         }
 
+        /* Tema Claro */
         body.theme-light {
             --primary-color: #3498db;
             --secondary-color: #2ecc71;
@@ -49,6 +59,7 @@
             color: #2c3e50;
         }
 
+        /* Tema para Daltônicos */
         body.theme-colorblind {
             --primary-color: #004488;
             --secondary-color: #d55e00;
@@ -61,12 +72,14 @@
             color: #333333;
         }
 
+        /* ========== ESTILOS GERAIS DO BODY ========== */
         body {
             line-height: 1.6;
             min-height: 100vh;
             transition: background 0.5s ease;
         }
 
+        /* ========== CONTAINER PRINCIPAL ========== */
         .container {
             width: 95%;
             max-width: 1800px;
@@ -74,6 +87,7 @@
             padding: 0 15px;
         }
 
+        /* ========== HEADER/CABEÇALHO ========== */
         header {
             background: rgba(26, 37, 47, 0.95);
             padding: 1rem 0;
@@ -83,6 +97,7 @@
             z-index: 1000;
         }
 
+        /* Ajustes do header para temas */
         body.theme-light header {
             background: rgba(52, 152, 219, 0.95);
         }
@@ -97,6 +112,7 @@
             align-items: center;
         }
 
+        /* Logo do Jogo */
         .logo {
             display: flex;
             align-items: center;
@@ -135,6 +151,7 @@
             color: #333333;
         }
 
+        /* Timer no Header */
         .header-timer {
             background: rgba(231, 76, 60, 0.15);
             border-radius: 12px;
@@ -160,6 +177,7 @@
             50% { box-shadow: 0 0 0 8px rgba(231, 76, 60, 0); }
         }
 
+        /* ========== LAYOUT PRINCIPAL DO JOGO ========== */
         .game-container {
             display: grid;
             grid-template-columns: 1fr 400px;
@@ -173,6 +191,7 @@
             }
         }
 
+        /* ========== CONTAINER DE CARTAS ========== */
         .main-card-container {
             width: 100%;
             max-width: 400px;
@@ -181,6 +200,7 @@
             margin: 0 auto;
         }
 
+        /* Responsividade para telas pequenas */
         @media (max-width: 375px) {
             .main-card-container {
                 height: 350px;
@@ -188,6 +208,7 @@
             }
         }
 
+        /* Estilo das Cartas */
         .game-card {
             width: 100%;
             height: 100%;
@@ -198,6 +219,7 @@
             transform-style: preserve-3d;
         }
 
+        /* Frente da Carta */
         .card-front {
             background: linear-gradient(145deg, #ffffff, #f0f0f0);
             border: 8px solid;
@@ -213,6 +235,7 @@
             padding: 0;
         }
 
+        /* Cores das bordas por tipo de carta */
         .card-concept .card-front { border-color: #3498db; }
         .card-application .card-front { border-color: #2ecc71; }
         .card-graph .card-front { border-color: #e74c3c; }
@@ -221,6 +244,7 @@
         body.theme-colorblind .card-application .card-front { border-color: #d55e00; }
         body.theme-colorblind .card-graph .card-front { border-color: #cc79a7; }
 
+        /* Cabeçalho da Carta */
         .card-header {
             background: rgba(0, 0, 0, 0.05);
             padding: 15px 20px;
@@ -230,6 +254,7 @@
             align-items: center;
         }
 
+        /* Badge do Tipo da Carta */
         .card-badge {
             padding: 6px 15px;
             border-radius: 20px;
@@ -246,6 +271,7 @@
         body.theme-colorblind .card-application .card-badge { background: #d55e00; }
         body.theme-colorblind .card-graph .card-badge { background: #cc79a7; }
 
+        /* Corpo da Carta */
         .card-body {
             flex: 1;
             padding: 25px;
@@ -256,6 +282,7 @@
             overflow-y: auto;
         }
 
+        /* Texto da Pergunta */
         .card-question {
             font-size: 1.3rem;
             line-height: 1.5;
@@ -275,7 +302,7 @@
             }
         }
 
-        .score-bubble {
+        /* Bolha de Pontuação */.score-bubble {
             position: absolute;
             top: -15px;
             right: -15px;
@@ -321,6 +348,7 @@
         body.theme-colorblind .level-intermediate { background: #f0e442; color: #333; }
         body.theme-colorblind .level-advanced { background: #cc79a7; }
 
+        /* ========== PAINEL DE CONTROLE ========== */
         .control-panel {
             background: rgba(255, 255, 255, 0.08);
             border-radius: 15px;
@@ -400,6 +428,7 @@
             border-radius: 3px;
         }
 
+        /* ========== BOTÕES ========== */
         .action-btn {
             padding: 12px 20px;
             border: none;
@@ -460,6 +489,7 @@
             border-color: rgba(0, 0, 0, 0.2);
         }
 
+        /* ========== MODAIS ========== */
         .modal {
             position: fixed;
             top: 0;
@@ -541,6 +571,7 @@
             z-index: 2000;
         }
 
+        /* ========== MODAL DE INTERAÇÃO (PERGUNTAS) ========== */
         .interaction-modal {
             position: fixed;
             top: 50%;
@@ -582,6 +613,7 @@
             background: linear-gradient(135deg, #009e73, #007a5a);
         }
 
+        /* Opções de Resposta */
         .answer-options {
             display: grid;
             grid-template-columns: 1fr;
@@ -679,6 +711,7 @@
             color: white;
         }
 
+        /* ========== TELA DE RESULTADO ========== */
         .result-screen {
             display: none;
         }
@@ -761,6 +794,7 @@
             background: rgba(0, 68, 136, 0.1);
         }
 
+        /* ========== CONFIGURAÇÃO DE JOGADORES ========== */
         .player-setup {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -801,6 +835,7 @@
             animation: shake 0.5s;
         }
 
+        /* ========== ANIMAÇÕES ========== */
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
             25% { transform: translateX(-5px); }
@@ -842,6 +877,7 @@
             to { transform: scale(1.2); }
         }
 
+        /* ========== RESPONSIVIDADE ========== */
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
@@ -885,6 +921,7 @@
             }
         }
 
+        /* Botões do Header */
         .header-buttons {
             display: flex;
             gap: 10px;
@@ -934,6 +971,7 @@
             }
         }
 
+        /* ========== ESTILOS ESPECÍFICOS ========== */
         .modal-content ul, 
         .modal-content ol {
             margin-left: 25px;
@@ -945,9 +983,11 @@
             line-height: 1.5;
         }
     </style>
+
 </head>
 <body class="theme-dark">
-    <div class="setup-modal" id="setupModal">
+    <!-- ========== MODAL DE CONFIGURAÇÃO INICIAL ========== -->
+     <div class="setup-modal" id="setupModal">
         <div class="modal-content">
             <h2 class="modal-title">
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
@@ -967,7 +1007,8 @@
                 </div>
             </h2>
             
-            <div class="panel-section">
+            <!-- Seção de Tema Visual -->
+             <div class="panel-section">
                 <label style="display: block; margin-bottom: 10px; font-size: 1.1rem;">
                     <i class="fas fa-palette"></i> Tema Visual
                 </label>
@@ -984,7 +1025,8 @@
                 </div>
             </div>
 
-            <div class="panel-section">
+            <!-- Seção de Nível de Dificuldade -->
+             <div class="panel-section">
                 <label style="display: block; margin-bottom: 10px; font-size: 1.1rem;">
                     <i class="fas fa-chart-line"></i> Nível de Dificuldade
                 </label>
@@ -1001,6 +1043,7 @@
                 </div>
             </div>
 
+            <!-- Seção de Número de Jogadores -->
             <div class="panel-section">
                 <label style="display: block; margin-bottom: 10px; font-size: 1.1rem;">
                     <i class="fas fa-users"></i> Número de Jogadores (2-8)
@@ -1016,10 +1059,12 @@
                 </div>
             </div>
 
+            <!-- Inputs Dinâmicos para Nomes dos Jogadores -->
             <div class="panel-section">
                 <div id="dynamicPlayerInputs"></div>
             </div>
 
+            <!-- Seção de Tempo por Turno -->
             <div style="margin: 30px 0;">
                 <label style="display: block; margin-bottom: 10px; font-size: 1.1rem;">
                     <i class="fas fa-clock"></i> Tempo por turno (segundos)
@@ -1030,6 +1075,7 @@
                 </div>
             </div>
 
+            <!-- Botões de Ação -->
             <div style="display: flex; gap: 15px; margin-top: 20px;">
                 <button class="action-btn secondary" id="loadGameBtn" style="flex: 1;">
                     <i class="fas fa-upload"></i> Carregar Jogo
@@ -1039,6 +1085,7 @@
                 </button>
             </div>
 
+            <!-- Modo Prática -->
             <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1);">
                 <button class="action-btn secondary" id="practiceModeBtn" style="width: 100%;">
                     <i class="fas fa-graduation-cap"></i> Modo Prática
@@ -1047,6 +1094,7 @@
         </div>
     </div>
 
+    <!-- ========== MODAL DE PERSONALIZAÇÃO ========== -->
     <div class="modal" id="customizationModal">
         <div class="modal-content">
             <button class="modal-close" id="closeCustomizationBtn">&times;</button>
@@ -1077,9 +1125,11 @@
         </div>
     </div>
 
+    <!-- ========== HEADER PRINCIPAL ========== -->
     <header>
         <div class="container">
             <div class="header-content">
+                <!-- Logo -->
                 <div class="logo">
                     <div class="logo-icon">
                         <i class="fas fa-function"></i>
@@ -1090,11 +1140,13 @@
                     </div>
                 </div>
                 
+                <!-- Timer -->
                 <div class="header-timer" id="headerTimer">
                     <i class="fas fa-clock"></i>
                     <div class="header-timer-time" id="headerTimerTime">30s</div>
                 </div>
                 
+                <!-- Botões de Controle -->
                 <div class="header-buttons">
                     <button class="action-btn secondary" id="reviewConceptsBtn">
                         <i class="fas fa-book"></i> Revisão de Conceitos
@@ -1119,11 +1171,14 @@
         </div>
     </header>
 
+    <!-- ========== ÁREA PRINCIPAL DO JOGO ========== -->
     <div class="container">
         <div class="game-container">
+            <!-- Área das Cartas -->
             <div class="cards-container">
                 <div class="card-table" id="cardTable">
                     <div class="main-card-container" id="mainCardContainer">
+                        <!-- Mensagem inicial (quando não há carta) -->
                         <div class="no-card-message" id="noCardMessage" style="text-align: center; padding: 40px;">
                             <div style="font-size: 4rem; color: var(--secondary-color); margin-bottom: 20px;">
                                 <i class="fas fa-drafting-compass"></i>
@@ -1135,6 +1190,7 @@
                 </div>
             </div>
             
+            <!-- Painel de Controle Lateral -->
             <div class="control-panel">
                 <div class="panel-section">
                     <h3>
@@ -1176,17 +1232,21 @@
         </div>
     </div>
 
+    <!-- ========== MODAL DE INTERAÇÃO (PERGUNTAS/RESPOSTAS) ========== -->
     <div class="interaction-modal" id="interactionModal">
         <div class="modal-content">
+            <!-- Tela de Pergunta -->
             <div id="questionScreen">
                 <div class="question-header">
                     <div id="questionHeaderContent" style="width: 100%;"></div>
                     
+                    <!-- Container para imagem (se houver) -->
                     <div id="questionImage" style="text-align: center; margin: 15px 0; display: none;"></div>
                     
                     <h3 id="questionText" style="margin-top: 15px;"></h3>
                 </div>
                 
+                <!-- Dica (se disponível) -->
                 <div id="hintContainer" style="display: none;">
                     <div class="hint-box">
                         <strong><i class="fas fa-lightbulb"></i> Dica:</strong>
@@ -1194,7 +1254,10 @@
                     </div>
                 </div>
                 
+                <!-- Opções de Resposta -->
                 <div class="answer-options" id="answerOptions"></div>
+
+                <!-- Botão de Confirmar -->
                 <div style="text-align: center;">
                     <button class="action-btn primary" id="submitAnswerBtn" style="width: 100%;">
                         <i class="fas fa-paper-plane"></i> Confirmar Resposta
@@ -1202,6 +1265,7 @@
                 </div>
             </div>
             
+            <!-- Tela de Resultado -->
             <div id="resultScreen" class="result-screen">
                 <div class="result-header">
                     <div class="result-icon" id="resultIcon">
@@ -1210,18 +1274,22 @@
                     <div class="result-title" id="resultTitle">Resultado</div>
                 </div>
                 
+                <!-- Explicação da Resposta -->
                 <div class="explanation-box" id="explanationText"></div>
                 
+                <!-- Resposta Correta (se errou) -->
                 <div class="correct-answer" id="correctAnswerBox" style="display: none;">
                     <strong>Resposta correta:</strong> <span id="correctAnswerText"></span>
                 </div>
                 
+                <!-- Mudança na Pontuação -->
                 <div class="score-change">
                     <div style="font-size: 1.2rem; margin-bottom: 5px;">Pontuação Atual</div>
                     <div style="font-size: 2rem; font-weight: bold; color: var(--secondary-color);" id="currentScore">0 pontos</div>
                     <div style="font-size: 1.5rem; margin-top: 5px;" id="scoreChangeText">+0</div>
                 </div>
                 
+                <!-- Botão para Próximo Jogador -->
                 <div style="text-align: center; margin-top: 20px;">
                     <button class="action-btn primary" id="nextPlayerBtn" style="width: 100%;">
                         <i class="fas fa-forward"></i> Próximo Jogador
@@ -1231,6 +1299,7 @@
         </div>
     </div>
 
+    <!-- ========== MODAL DE REVISÃO DE CONCEITOS ========== -->
     <div class="modal" id="conceptsModal">
         <div class="modal-content">
             <button class="modal-close" id="closeConceptsBtn">&times;</button>
@@ -1312,6 +1381,7 @@
         </div>
     </div>
 
+    <!-- ========== MODAL DE REVISÃO DE GRÁFICOS ========== -->
     <div class="modal" id="graphsModal">
         <div class="modal-content">
             <button class="modal-close" id="closeGraphsBtn">&times;</button>
@@ -1426,6 +1496,7 @@
         </div>
     </div>
 
+    <!-- ========== MODAL DE INSTRUÇÕES ========== -->
     <div class="modal" id="instructionsModal">
         <div class="modal-content">
             <button class="modal-close" id="closeInstructionsBtn">&times;</button>
@@ -1583,33 +1654,51 @@
         </div>
     </div>
 
+    <!-- ========== JAVASCRIPT ========== -->
     <script>
-        // Sistema de gerenciamento de estado CORRIGIDO
+        // ========== SISTEMA DE GERENCIAMENTO DE ESTADO ==========
+        /**
+         * Objeto principal que armazena todo o estado do jogo
+         * @type {Object}
+         */
         const gameState = {
+            // Informações dos jogadores
             players: [],
-            currentPlayer: 0,
-            deck: [],
-            currentCard: null,
-            gameActive: false,
-            timer: null,
-            timeLeft: 30,
-            totalQuestions: 0,
+            currentPlayer: 0, // Índice do jogador atual
+
+            // Sistema de cartas
+            deck: [], // Baralho atual
+            currentCard: null, // Carta sendo exibida atualmente
+            
+            // Estado do jogo
+            gameActive: false, // Se o jogo está em andamento
+            timer: null, // Referência ao timer ativo
+            timeLeft: 30, // Tempo restante em segundos
+
+            // Estatísticas
+            totalQuestions: 0, 
             correctAnswers: 0,
             totalTurns: 0,
             maxScore: 1000,
+
+            // Identificação e modos
             gameId: Date.now().toString(),
             practiceMode: false,
+            
+            // Configurações
             difficultyLevel: 'intermediate',
             theme: 'theme-dark',
+            
+            // Controles de estado (para evitar bugs)
             doublePointsActive: false,
             hintsUsed: 0,
             mistakesHistory: [],
             
             // CAMPOS ADICIONADOS PARA CORREÇÃO DO TIMER:
-            cardOnTable: false,
-            answerSubmitted: false,
-            responseStartTime: 0,
-            timerActive: false, // Controle explícito do estado do timer
+            cardOnTable: false, // Se há uma carta na mesa
+            answerSubmitted: false, // Se a resposta já foi enviada
+            responseStartTime: 0, // Quando a resposta começou
+            timerActive: false, // Controle explícito do estado do timer,  // Se o timer está ativo
             
             // Estatísticas da partida atual
             currentGameStats: {
@@ -1620,37 +1709,73 @@
                     application: 0,
                     graph: 0
                 },
-                responseTimes: [],
+                responseTimes: [], // Tempos de resposta
                 hintsUsed: 0,
                 mistakesHistory: [],
                 
             }
         };
 
-        // Filtros de dificuldade por nível
-const difficultyFilters = {
-    beginner: card => card.difficulty === "Fácil", // Apenas cartas Fáceis
-    intermediate: card => card.difficulty === "Fácil" || card.difficulty === "Média", // Fáceis + Médias
-    advanced: card => true // Todas as cartas (Fáceis, Médias e Difíceis)
-};
+        // ========== CONFIGURAÇÕES DE DIFICULDADE ==========
+        /**
+         * Filtros para selecionar cartas baseadas na dificuldade
+         * @type {Object}
+         */
+        const difficultyFilters = {
+            beginner: card => card.difficulty === "Fácil", // Apenas cartas Fáceis
+            intermediate: card => card.difficulty === "Fácil" || card.difficulty === "Média", // Fáceis + Médias
+            advanced: card => true // Todas as cartas (Fáceis, Médias e Difíceis)
+        };
 
-        // Tempos por nível
+        /**
+         * Tempos por nível de dificuldade (em segundos)
+         * @type {Object}
+         */
         const levelTimes = {
             beginner: 60,
             intermediate: 40,
             advanced: 20
         };
 
-        // Cores para jogadores
+        // ========== PALETA DE CORES PARA JOGADORES ==========
+        /**
+         * Cores distintas para identificar jogadores
+         * @type {Array}
+         */
         const playerColors = [
-            '#e74c3c', '#3498db', '#2ecc71', '#f39c12',
-            '#9b59b6', '#1abc9c', '#d35400', '#34495e'
+            '#e74c3c', // Vermelho
+            '#3498db', // Azul
+            '#2ecc71', // Verde
+            '#f39c12', // Laranja
+            '#9b59b6', // Roxo
+            '#1abc9c', // Turquesa
+            '#d35400', // Marrom
+            '#34495e'  // Cinza escuro
         ];
 
-        // Variáveis de controle
-        let playerCount = 2;
+       
+        // ========== VARIÁVEIS DE CONTROLE ==========
+        let playerCount = 2; // Número padrão de jogadores
 
+        // ========== BANCO DE DADOS DE CARTAS ==========
+        /**
+         * Array com todas as cartas do jogo
+         * Cada carta contém:
+         * - id: identificador único
+         * - type: tipo (concept, application, graph)
+         * - question: texto da pergunta
+         * - options: array com opções de resposta
+         * - correct: índice da resposta correta
+         * - explanation: explicação detalhada
+         * - points: pontos base
+         * - difficulty: nível de dificuldade
+         * - hint: dica opcional
+         * @type {Array}
+         */
         const allCards = [
+            // Cartas de Conceito (1-16, 35-40, 54)
+            // Cartas de Aplicação (17-30, 41-48)
+            // Cartas de Gráfico (31-34, 49-53)
             {
                 id: 1,
                 type: 'concept',
@@ -2249,6 +2374,12 @@ const difficultyFilters = {
             }
         ];
 
+        // ========== FUNÇÕES PRINCIPAIS DO JOGO ==========
+
+        /**
+         * Reseta o jogo completamente
+         * @returns {void}
+         */
         function resetGame() {
             if (confirm("Tem certeza que deseja encerrar o jogo atual e apagar todo o progresso?")) {
                 // 1. Para qualquer timer que esteja rodando
@@ -2272,14 +2403,18 @@ const difficultyFilters = {
             }
             document.getElementById('headerTimer').classList.remove('active');
             gameState.timerActive = false;
-            
-            // Resetar estilo
+        
+            // Resetar estilo do timer
             const timerElement = document.getElementById('headerTimerTime');
             timerElement.style.color = '';
             timerElement.style.fontWeight = '';
         }
 
         // Função para resetar estado do turno
+        /**
+         * Reseta o estado do turno atual
+         * @returns {void}
+         */
         function resetTurnState() {
             stopTimer();
             gameState.answerSubmitted = false;
@@ -2287,6 +2422,10 @@ const difficultyFilters = {
         }
 
         // Função para limpar carta da mesa
+        /**
+         * Remove a carta atual da mesa
+         * @returns {void}
+         */
         function clearCardFromTable() {
             const container = document.getElementById('mainCardContainer');
             container.innerHTML = `
@@ -2300,11 +2439,18 @@ const difficultyFilters = {
             `;
         }
 
-        // CORREÇÃO: Função para calcular pontos - apenas combo multiplier
+        /**
+         * Calcula os pontos ganhos por uma resposta correta
+         * @param {Object} card - A carta respondida
+         * @param {Object} player - O jogador que respondeu
+         * @returns {Object} Objeto com basePoints, comboBonus e totalPoints
+         * 
+         * Função para calcular pontos - apenas combo multiplier
+         */
         function calculatePoints(card, player) {
             let basePoints = card.points;
             
-            // Bônus fixo por combo (nova regra)
+            // Bônus fixo por combo 
             let comboBonus = 0;
             if (player.streak >= 5) {
                 comboBonus = 25; // 5 acertos: 25 pontos
@@ -2321,7 +2467,10 @@ const difficultyFilters = {
             return { basePoints, comboBonus, totalPoints };
         }
 
-        // CORREÇÃO CRÍTICA: Timer robusto
+        /**
+         * Inicia o timer para a resposta atual
+         * @returns {void}
+         */
         function startTimer() {
             // 1. SEMPRE limpar timer existente primeiro
             if (gameState.timer) {
@@ -2358,7 +2507,7 @@ const difficultyFilters = {
                 gameState.timeLeft--;
                 timerElement.textContent = gameState.timeLeft + 's';
                 
-                // Efeito visual
+                // Efeito visual quando o tempo está acabando
                 if (gameState.timeLeft <= 10) {
                     timerElement.style.color = '#e74c3c';
                     timerElement.style.fontWeight = 'bold';
@@ -2372,7 +2521,7 @@ const difficultyFilters = {
                     timerElement.style.color = '';
                     timerElement.style.fontWeight = '';
                     
-                    // Resposta automática
+                    // Processar resposta automática (erro)
                     if (!gameState.answerSubmitted && gameState.cardOnTable && gameState.currentCard) {
                         const card = gameState.currentCard;
                         const player = gameState.players[gameState.currentPlayer];
@@ -2397,7 +2546,11 @@ const difficultyFilters = {
             }, 1000);
         }
 
-        // Função para comprar carta (CORRIGIDA)
+        // Função para comprar carta
+        /**
+         * Compra uma nova carta do deck
+         * @returns {void}
+         */ 
         function drawCard() {
             if (!gameState.gameActive) {
                 showNotification("O jogo não está ativo!", 'error');
@@ -2438,6 +2591,11 @@ const difficultyFilters = {
         }
 
         // Função para mostrar modal de pergunta
+        /**
+         * Exibe o modal com a pergunta da carta
+         * @param {Object} card - A carta a ser exibida
+         * @returns {void}
+         */
         function showQuestionModal(card) {
             const modal = document.getElementById('interactionModal');
             
@@ -2452,6 +2610,7 @@ const difficultyFilters = {
                 </button>
             `).join('');
             
+             // Configurar cabeçalho da pergunta
             const typeText = card.type === 'concept' ? '📚 Conceito' : 
                             card.type === 'application' ? '💼 Aplicação' : '📈 Gráfico';
             
@@ -2460,6 +2619,7 @@ const difficultyFilters = {
             
             let displayedPoints = card.points;
             const currentPlayer = gameState.players[gameState.currentPlayer];
+            
             // Calcular bônus que será ganho SE acertar (streak atual + 1)
             const tempStreak = currentPlayer.streak + 1;
             const tempPlayer = { ...currentPlayer, streak: tempStreak };
@@ -2467,6 +2627,7 @@ const difficultyFilters = {
             let bonusText = pointsDetail.comboBonus > 0 ? ` (+${pointsDetail.comboBonus} bônus)` : '';
 
 
+            // Montar cabeçalho
             document.getElementById('questionHeaderContent').innerHTML = `
                 <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 15px;">
                     <div style="display: flex; align-items: center; gap: 10px;">
@@ -2487,6 +2648,7 @@ const difficultyFilters = {
                 </div>
             `;
             
+            // Configurar pergunta e opções
             document.getElementById('questionText').textContent = card.question;
             document.getElementById('answerOptions').innerHTML = options;
             document.getElementById('hintContainer').style.display = 'none';
@@ -2568,10 +2730,15 @@ const difficultyFilters = {
                 });
             });
             
+            // Mostrar modal
             modal.style.display = 'block';
         }
 
-        // CORREÇÃO: Função para submeter resposta
+        // Função para submeter resposta
+        /**
+         * Processa a resposta do jogador
+         * @returns {void}
+         */
         function submitAnswer() {
             // Verificar múltiplas condições antes de processar
             if (gameState.answerSubmitted || !gameState.currentCard || !gameState.gameActive) {
@@ -2591,23 +2758,26 @@ const difficultyFilters = {
             // 2. Marcar como respondida
             gameState.answerSubmitted = true;
             
+            // 3. Processar resposta
             const selectedIndex = parseInt(selected.dataset.index);
             const card = gameState.currentCard;
             const isCorrect = selectedIndex === card.correct;
             const player = gameState.players[gameState.currentPlayer];
 
-            // Cálculo de tempo
+            // Cálculo de tempo de resposta
             const currentTime = Date.now();
             let diff = (currentTime - gameState.responseStartTime) / 1000;
             if (gameState.responseStartTime <= 0 || diff > 120) diff = 2;
             gameState.currentGameStats.responseTimes.push(diff);
 
+            // Atualizar estatísticas
             player.totalAnswers++;
             gameState.totalQuestions++;
 
             let pointsDetail = null;
             
             if (isCorrect) {
+                // Resposta correta
                 gameState.currentGameStats.questionsByType[card.type]++;
                 
                 player.streak++;
@@ -2620,10 +2790,12 @@ const difficultyFilters = {
                 player.correctAnswers++;
                 gameState.correctAnswers++;
             } else {
+                // Resposta incorreta
                 player.streak = 0;
                 player.lastScoreChange = 0;
             }
 
+            // Mostrar resultado
             showResultScreen(isCorrect, selectedIndex, pointsDetail);
             updatePlayersDisplay();
             updateStats();
@@ -2631,13 +2803,22 @@ const difficultyFilters = {
         }
 
         // Função para mostrar tela de resultado
+        /**
+         * Exibe a tela de resultado após responder
+         * @param {boolean} isCorrect - Se a resposta está correta
+         * @param {number} selectedIndex - Índice da opção selecionada
+         * @param {Object} pointsDetail - Detalhes dos pontos ganhos
+         * @returns {void}
+         */
         function showResultScreen(isCorrect, selectedIndex, pointsDetail) {
             const card = gameState.currentCard;
             const player = gameState.players[gameState.currentPlayer];
             
+            // Configurar telas
             document.getElementById('questionScreen').style.display = 'none';
             document.getElementById('resultScreen').style.display = 'block';
             
+            // Configurar ícone e título
             const resIcon = document.getElementById('resultIcon');
             const resTitle = document.getElementById('resultTitle');
 
@@ -2651,8 +2832,10 @@ const difficultyFilters = {
                 resTitle.textContent = 'Resposta Incorreta';
             }
             
+            // Explicação 
             document.getElementById('explanationText').innerHTML = `<p>${card.explanation}</p>`;
             
+            // Resposta correta (se errou)
             if (!isCorrect) {
                 document.getElementById('correctAnswerBox').style.display = 'block';
                 document.getElementById('correctAnswerText').textContent = card.options[card.correct];
@@ -2660,9 +2843,10 @@ const difficultyFilters = {
                 document.getElementById('correctAnswerBox').style.display = 'none';
             }
             
+            // Pontuação
             document.getElementById('currentScore').textContent = player.score + ' pontos';
             
-            // --- EXIBIÇÃO DETALHADA PEDIDA ---
+            // Detalhes da pontuação
             const scoreChangeText = document.getElementById('scoreChangeText');
             if (isCorrect && pointsDetail) {
                 let html = `<div style="font-size: 1rem; opacity: 0.9;">`;
@@ -2678,6 +2862,7 @@ const difficultyFilters = {
                 scoreChangeText.style.color = '#e74c3c';
             }
             
+            // Destacar opções corretas/incorretas
             const optionBtns = document.querySelectorAll('.option-btn');
             optionBtns.forEach((btn, index) => {
                 if (index === card.correct) btn.classList.add('correct');
@@ -2686,7 +2871,11 @@ const difficultyFilters = {
             });
         }
 
-        // CORREÇÃO: Função para próximo jogador
+        /**
+         * Avança para o próximo jogador
+         * @returns {void}
+         */
+        // Função para próximo jogador
         function nextPlayer() {
             // 1. Parar timer
             stopTimer();
@@ -2698,30 +2887,37 @@ const difficultyFilters = {
                 return;
             }
 
+            // 3. Fechar modal
             const modal = document.getElementById('interactionModal');
             modal.style.display = 'none';
             
-            // 3. Resetar estado do turno
+            // 4. Resetar estado do turno
             gameState.cardOnTable = false;
             gameState.currentCard = null;
             gameState.answerSubmitted = false;
             gameState.responseStartTime = 0;
             
+            // 5. Habilitar botão de comprar carta
             document.getElementById('drawCardBtn').disabled = false;
             clearCardFromTable();
             
-            // 4. Passar para próximo jogador (se não for modo prática)
+            // 6. Passar para próximo jogador (se não for modo prática)
             if (!gameState.practiceMode) {
                 gameState.currentPlayer = (gameState.currentPlayer + 1) % gameState.players.length;
             }
             
+            // 7. Atualizar interface
             updatePlayersDisplay();
             saveGameState();
             
             showNotification(`Turno de ${gameState.players[gameState.currentPlayer].name}`, 'info');
         }
 
-        // Sistema de salvamento (ATUALIZADO)
+        // Sistema de salvamento
+        /**
+         * Salva o estado atual do jogo no localStorage
+         * @returns {void}
+         */
         function saveGameState() {
             const saveData = {
                 players: gameState.players,
@@ -2741,7 +2937,7 @@ const difficultyFilters = {
                 difficultyLevel: gameState.difficultyLevel,
                 currentGameStats: gameState.currentGameStats,
                 
-                // NOVOS CAMPOS SALVOS:
+                // Estados de controle
                 cardOnTable: gameState.cardOnTable,
                 answerSubmitted: gameState.answerSubmitted,
                 responseStartTime: gameState.responseStartTime,
@@ -2755,7 +2951,10 @@ const difficultyFilters = {
             }
         }
 
-        // CORREÇÃO: Carregar estado do jogo (com reset de estados)
+        // Carregar estado do jogo (com reset de estados)
+        /* Carrega o estado do jogo do localStorage
+         * @returns {boolean} Sucesso na operação
+         */
         function loadGameState() {
             try {
                 const savedData = localStorage.getItem('mathCards_save');
@@ -2793,13 +2992,13 @@ const difficultyFilters = {
                     mistakesHistory: []
                 };
                 
-                // NOVOS CAMPOS CARREGADOS:
+                // Estados de controle
                 gameState.cardOnTable = data.cardOnTable || false;
                 gameState.answerSubmitted = data.answerSubmitted || false;
                 gameState.responseStartTime = data.responseStartTime || 0;
                 gameState.timerActive = data.timerActive || false;
                 
-                // CORREÇÃO: Resetar estados se jogo não está ativo
+                // Resetar estados se jogo não está ativo
                 if (!gameState.gameActive) {
                     gameState.cardOnTable = false;
                     gameState.currentCard = null;
@@ -2841,7 +3040,7 @@ const difficultyFilters = {
                     }
                 });
                 
-                // CORREÇÃO: Atualizar interface baseada no estado
+                // Atualizar interface baseada no estado
                 if (gameState.cardOnTable && gameState.currentCard) {
                     document.getElementById('drawCardBtn').disabled = true;
                     // Recriar a carta na mesa
@@ -2872,7 +3071,12 @@ const difficultyFilters = {
             }
         }
 
-        // CORREÇÃO: Função para terminar jogo
+        // Função para terminar jogo
+        /**
+         * Finaliza o jogo
+         * @param {string} reason - Razão do término ('points' ou 'cards')
+         * @returns {void}
+         */
         function endGame(reason) {
             // 1. Parar timer definitivamente
             stopTimer();
@@ -2941,6 +3145,7 @@ const difficultyFilters = {
             nextBtn.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
             
             // O pulo do gato: ao clicar, apaga o save e recarrega
+            // Configurar botão para reiniciar
             nextBtn.onclick = function() {
                 localStorage.removeItem('mathCards_save');
                 window.location.reload();
@@ -2951,7 +3156,14 @@ const difficultyFilters = {
             clearCardFromTable();
         }
 
-        // ========== FUNÇÕES AUXILIARES (mantidas como estão) ==========
+        // ========== FUNÇÕES AUXILIARES ==========
+
+        /**
+         * Exibe uma notificação na tela
+         * @param {string} message - Mensagem a ser exibida
+         * @param {string} type - Tipo ('success', 'error', 'warning', 'info')
+         * @returns {void}
+         */
 
         function showNotification(message, type = 'info') {
             const notification = document.createElement('div');
@@ -2986,6 +3198,7 @@ const difficultyFilters = {
                 setTimeout(() => notification.remove(), 300);
             }, 3000);
             
+            // Adicionar estilos de animação se não existirem
             if (!document.getElementById('notification-styles')) {
                 const style = document.createElement('style');
                 style.id = 'notification-styles';
@@ -3003,11 +3216,20 @@ const difficultyFilters = {
             }
         }
 
+        /**
+         * Atualiza as estatísticas na interface
+         * @returns {void}
+         */
         function updateStats() {
             document.getElementById('totalQuestions').textContent = gameState.totalQuestions;
             document.getElementById('correctAnswers').textContent = gameState.correctAnswers;
         }
 
+         /**
+         * Retorna o nome do nível atual
+         * @param {string} level - Nível ('beginner', 'intermediate', 'advanced')
+         * @returns {string} Nome formatado do nível
+         */
         function getLevelName(level) {
             const names = {
                 beginner: 'Iniciante',
@@ -3017,6 +3239,10 @@ const difficultyFilters = {
             return names[level] || 'Intermediário';
         }
 
+        /**
+         * Atualiza a exibição do nível na interface
+         * @returns {void}
+         */
         function updateLevelDisplay() {
             const levelElement = document.getElementById('currentLevel');
             const levelName = getLevelName(gameState.difficultyLevel);
@@ -3026,6 +3252,10 @@ const difficultyFilters = {
             levelElement.className = `level-badge ${levelClass}`;
         }
 
+        /**
+         * Atualiza a exibição dos jogadores na interface
+         * @returns {void}
+         */
         function updatePlayersDisplay() {
             const container = document.getElementById('playersInfo');
             container.innerHTML = gameState.players.map((player, index) => {
@@ -3057,6 +3287,10 @@ const difficultyFilters = {
 
         // ========== INICIALIZAÇÃO DO JOGO ==========
 
+        /**
+         * Inicializa o jogo com as configurações atuais
+         * @returns {void}
+         */
         function initializeGame() {
             console.log("Inicializando jogo...");
             
@@ -3100,17 +3334,21 @@ const difficultyFilters = {
                 }
             }));
             
-            gameState.difficultyLevel = document.querySelector('.level-selector.active').dataset.level;
-gameState.timeLeft = levelTimes[gameState.difficultyLevel]; 
-            // CORREÇÃO: Usar filtros de dificuldade reais
-gameState.deck = allCards.filter(difficultyFilters[gameState.difficultyLevel]);
+             // Configurar dificuldade
+             gameState.difficultyLevel = document.querySelector('.level-selector.active').dataset.level;
+            gameState.timeLeft = levelTimes[gameState.difficultyLevel]; 
+
+            // Usar filtros de dificuldade reais
+            // Filtrar cartas baseado na dificuldade
+            gameState.deck = allCards.filter(difficultyFilters[gameState.difficultyLevel]);
             
             // Embaralhar cartas
-          for (let i = gameState.deck.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [gameState.deck[i], gameState.deck[j]] = [gameState.deck[j], gameState.deck[i]];
-}
+            for (let i = gameState.deck.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [gameState.deck[i], gameState.deck[j]] = [gameState.deck[j], gameState.deck[i]];
+            }
             
+            // Configurar estado inicial
             gameState.gameActive = true;
             gameState.currentPlayer = 0;
             gameState.totalQuestions = 0;
@@ -3137,17 +3375,22 @@ gameState.deck = allCards.filter(difficultyFilters[gameState.difficultyLevel]);
             // Salvar estado
             saveGameState();
             
-showNotification(`${gameState.players[gameState.currentPlayer].name} começa! Nível: ${getLevelName(gameState.difficultyLevel)}. ${gameState.deck.length} cartas no deck.`, 'info');
+            showNotification(`${gameState.players[gameState.currentPlayer].name} começa! Nível: ${getLevelName(gameState.difficultyLevel)}. ${gameState.deck.length} cartas no deck.`, 'info');
         }
 
         // ========== EVENT LISTENERS ==========
 
+        /**
+         * Configura todos os event listeners quando o DOM carrega
+         * @returns {void}
+         */
+
         document.addEventListener('DOMContentLoaded', function() {
             
-            // Ligar a função ao botão
+            // Botão de resetar jogo
             document.getElementById('resetGameBtn').addEventListener('click', resetGame);
 
-            // Carregar configurações
+            // Carregar configurações salvas
             const savedTheme = localStorage.getItem('mathCards_theme');
             if (savedTheme) {
                 document.body.className = savedTheme;
@@ -3177,6 +3420,7 @@ showNotification(`${gameState.players[gameState.currentPlayer].name} começa! N�
                 }
             }
             
+            // Gerar inputs iniciais
             generatePlayerInputs(playerCount);
             
             // Configurar controle de tempo
@@ -3343,7 +3587,7 @@ showNotification(`${gameState.players[gameState.currentPlayer].name} começa! N�
                 }
                 
                 if (validatePlayerNames()) {
-                    // Modo prática simplificado
+                    // Modo prática simplificado  (apenas 1 jogador)
                     const playerName = document.getElementById('player1Name').value.trim() || "Praticante";
                     gameState.players = [{
                         id: 1,
@@ -3368,16 +3612,19 @@ showNotification(`${gameState.players[gameState.currentPlayer].name} começa! N�
                         }
                     }];
                     
+                    // Configurar dificuldade
                     gameState.difficultyLevel = document.querySelector('.level-selector.active').dataset.level;
-gameState.timeLeft = levelTimes[gameState.difficultyLevel];
+                    gameState.timeLeft = levelTimes[gameState.difficultyLevel];
 
-// Usar filtros de dificuldade
-gameState.deck = allCards.filter(difficultyFilters[gameState.difficultyLevel]);
+                    // Usar filtros de dificuldade
+                    gameState.deck = allCards.filter(difficultyFilters[gameState.difficultyLevel]);
+                    // Embaralhar
                     for (let i = gameState.deck.length - 1; i > 0; i--) {
                         const j = Math.floor(Math.random() * (i + 1));
                         [gameState.deck[i], gameState.deck[j]] = [gameState.deck[j], gameState.deck[i]];
                     }
                     
+                    // Configurar estado
                     gameState.gameActive = true;
                     gameState.currentPlayer = 0;
                     gameState.totalQuestions = 0;
@@ -3423,14 +3670,16 @@ gameState.deck = allCards.filter(difficultyFilters[gameState.difficultyLevel]);
 
         });
     </script>
-<footer style="text-align: center; padding: 20px; margin-top: 40px; 
-              background: rgba(0,0,0,0.05); border-top: 1px solid rgba(0,0,0,0.1);">
-    <div style="font-size: 0.9rem; color: #666;">
-        <p>© 2026 Sergio Eric Reis de Oliveira - Trabalho de Conclusão de Curso</p>
-        <p>Licenciado sob <a href="LICENSE" style="color: #3498db;">MIT License</a> | 
-           Código disponível em <a href="https://github.com/profsergioericmatematica/TCC-Jogo-Educativo-Funcoes-AFIM.git" 
-           style="color: #3498db;">GitHub</a></p>
-    </div>
-</footer>
+
+    <!-- ========== FOOTER ========== -->
+    <footer style="text-align: center; padding: 20px; margin-top: 40px; 
+                  background: rgba(0,0,0,0.05); border-top: 1px solid rgba(0,0,0,0.1);">
+        <div style="font-size: 0.9rem; color: #666;">
+            <p>© 2026 Antonio Antunes Junior, Giovani Machado de Lima, Priscilla Santiago Zamorra, Rodrigo Aires de Medeiros Correa, Sergio Eric Reis de Oliveira e Vitor Correa Uberti   - Trabalho de Conclusão de Curso</p>
+            <p>Licenciado sob <a href="LICENSE" style="color: #3498db;">MIT License</a> | 
+               Código disponível em <a href="https://github.com/profsergioericmatematica/TCC-Jogo-Educativo-Funcoes-AFIM.git" 
+               style="color: #3498db;">GitHub</a></p>
+        </div>
+    </footer>
 </body>
 </html>
