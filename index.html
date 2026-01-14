@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- ESTILOS CSS -->
-     <style>
+    <style>
         /* ========== RESET E CONFIGURAÇÕES GERAIS ========== */
         * {
             margin: 0;
@@ -308,7 +308,8 @@
             }
         }
 
-        /* Bolha de Pontuação */.score-bubble {
+        /* Bolha de Pontuação */
+        .score-bubble {
             position: absolute;
             top: -15px;
             right: -15px;
@@ -432,6 +433,138 @@
             height: 100%;
             background: linear-gradient(to right, var(--secondary-color), var(--accent-color));
             border-radius: 3px;
+        }
+
+        /* ========== BOTÕES DE NÍVEL ========== */
+        .level-selector {
+            text-align: left;
+            justify-content: flex-start;
+        }
+
+        .level-selector[data-level="beginner"] {
+            background: linear-gradient(135deg, rgba(46, 204, 113, 0.2), rgba(46, 204, 113, 0.4));
+            border: 2px solid #2ecc71;
+            color: #2ecc71;
+        }
+
+        .level-selector[data-level="beginner"]:hover {
+            background: linear-gradient(135deg, rgba(46, 204, 113, 0.3), rgba(46, 204, 113, 0.5));
+            border-color: #27ae60;
+        }
+
+        .level-selector[data-level="intermediate"] {
+            background: linear-gradient(135deg, rgba(243, 156, 18, 0.2), rgba(243, 156, 18, 0.4));
+            border: 2px solid #f39c12;
+            color: #f39c12;
+        }
+
+        .level-selector[data-level="intermediate"]:hover {
+            background: linear-gradient(135deg, rgba(243, 156, 18, 0.3), rgba(243, 156, 18, 0.5));
+            border-color: #e67e22;
+        }
+
+        .level-selector[data-level="advanced"] {
+            background: linear-gradient(135deg, rgba(231, 76, 60, 0.2), rgba(231, 76, 60, 0.4));
+            border: 2px solid #e74c3c;
+            color: #e74c3c;
+        }
+
+        .level-selector[data-level="advanced"]:hover {
+            background: linear-gradient(135deg, rgba(231, 76, 60, 0.3), rgba(231, 76, 60, 0.5));
+            border-color: #c0392b;
+        }
+
+        /* Estilo para botão de nível ativo */
+        .level-selector.active {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            font-weight: bold;
+        }
+
+        .level-selector.active[data-level="beginner"] {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
+            border-color: #27ae60;
+        }
+
+        .level-selector.active[data-level="intermediate"] {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+            border-color: #e67e22;
+        }
+
+        .level-selector.active[data-level="advanced"] {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            border-color: #c0392b;
+        }
+
+        /* Ajustes para tema claro */
+        body.theme-light .level-selector[data-level="beginner"] {
+            background: linear-gradient(135deg, rgba(46, 204, 113, 0.1), rgba(46, 204, 113, 0.3));
+            color: #27ae60;
+        }
+
+        body.theme-light .level-selector[data-level="intermediate"] {
+            background: linear-gradient(135deg, rgba(243, 156, 18, 0.1), rgba(243, 156, 18, 0.3));
+            color: #d35400;
+        }
+
+        body.theme-light .level-selector[data-level="advanced"] {
+            background: linear-gradient(135deg, rgba(231, 76, 60, 0.1), rgba(231, 76, 60, 0.3));
+            color: #c0392b;
+        }
+
+        body.theme-light .level-selector.active[data-level="beginner"] {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
+        }
+
+        body.theme-light .level-selector.active[data-level="intermediate"] {
+            background: linear-gradient(135deg, #f39c12, #d35400);
+            color: white;
+        }
+
+        body.theme-light .level-selector.active[data-level="advanced"] {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+        }
+
+        /* Ajustes para tema daltônico */
+        body.theme-colorblind .level-selector[data-level="beginner"] {
+            background: linear-gradient(135deg, rgba(0, 158, 115, 0.2), rgba(0, 158, 115, 0.4));
+            border: 2px solid #009e73;
+            color: #009e73;
+        }
+
+        body.theme-colorblind .level-selector[data-level="intermediate"] {
+            background: linear-gradient(135deg, rgba(240, 228, 66, 0.2), rgba(240, 228, 66, 0.4));
+            border: 2px solid #f0e442;
+            color: #333333;
+        }
+
+        body.theme-colorblind .level-selector[data-level="advanced"] {
+            background: linear-gradient(135deg, rgba(204, 121, 167, 0.2), rgba(204, 121, 167, 0.4));
+            border: 2px solid #cc79a7;
+            color: #cc79a7;
+        }
+
+        body.theme-colorblind .level-selector.active[data-level="beginner"] {
+            background: linear-gradient(135deg, #009e73, #007a5a);
+            color: white;
+            border-color: #007a5a;
+        }
+
+        body.theme-colorblind .level-selector.active[data-level="intermediate"] {
+            background: linear-gradient(135deg, #f0e442, #e6c300);
+            color: #333333;
+            border-color: #e6c300;
+        }
+
+        body.theme-colorblind .level-selector.active[data-level="advanced"] {
+            background: linear-gradient(135deg, #cc79a7, #b366a0);
+            color: white;
+            border-color: #b366a0;
         }
 
         /* ========== BOTÕES ========== */
@@ -993,7 +1126,7 @@
 </head>
 <body class="theme-dark">
     <!-- ========== MODAL DE CONFIGURAÇÃO INICIAL ========== -->
-     <div class="setup-modal" id="setupModal">
+    <div class="setup-modal" id="setupModal">
         <div class="modal-content">
             <h2 class="modal-title">
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
@@ -1014,7 +1147,7 @@
             </h2>
             
             <!-- Seção de Tema Visual -->
-             <div class="panel-section">
+            <div class="panel-section">
                 <label style="display: block; margin-bottom: 10px; font-size: 1.1rem;">
                     <i class="fas fa-palette"></i> Tema Visual
                 </label>
@@ -1031,38 +1164,116 @@
                 </div>
             </div>
 
-            <!-- Seção de Nível de Dificuldade -->
-             <div class="panel-section">
+            <!-- Indicador Visual do Nível Selecionado -->
+            <div class="panel-section" style="margin-bottom: 20px;">
                 <label style="display: block; margin-bottom: 10px; font-size: 1.1rem;">
-                    <i class="fas fa-chart-line"></i> Nível de Dificuldade
+                    <i class="fas fa-eye"></i> Visualização do Nível
+                </label>
+                <div id="levelVisualIndicator" 
+                    style="padding: 15px; border-radius: 10px; text-align: center; transition: all 0.3s; margin-top: 10px;">
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 10px;">
+                        <div id="levelIcon" style="font-size: 2.5rem;">
+                            <i class="fas fa-tree"></i>
+                        </div>
+                        <div style="text-align: left;">
+                            <div id="levelName" style="font-size: 1.3rem; font-weight: bold;">Intermediário</div>
+                            <div id="levelDescription" style="font-size: 0.95rem; opacity: 0.9;">
+                                45 segundos por questão • 48 cartas
+                            </div>
+                        </div>
+                    </div>
+                    <div id="levelDetails" style="font-size: 0.9rem; opacity: 0.8;">
+                        <div style="display: flex; justify-content: space-around; margin-top: 10px;">
+                            <div>
+                                <i class="fas fa-clock"></i>
+                                <div style="font-weight: bold;" id="levelTime">45s</div>
+                                <div style="font-size: 0.8rem;">por questão</div>
+                            </div>
+                            <div>
+                                <i class="fas fa-layer-group"></i>
+                                <div style="font-weight: bold;" id="levelCards">48</div>
+                                <div style="font-size: 0.8rem;">cartas</div>
+                            </div>
+                            <div>
+                                <i class="fas fa-brain"></i>
+                                <div style="font-weight: bold;" id="levelDifficulty">Média</div>
+                                <div style="font-size: 0.8rem;">dificuldade</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seção de Nível de Dificuldade -->
+            <div class="panel-section">
+                <label style="display: block; margin-bottom: 10px; font-size: 1.1rem;">
+                    <i class="fas fa-chart-line"></i> Nível de Dificuldade (Tempo por Questão)
                 </label>
                 <div style="display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap;">
-                    <button class="action-btn secondary level-selector" data-level="beginner" data-time="60">
-                        <i class="fas fa-seedling"></i> Iniciante (60s) - 24 cartas fáceis
+                    <button class="action-btn secondary level-selector" data-level="beginner" 
+                            style="flex: 1; min-width: 200px; display: flex; align-items: center; justify-content: flex-start; gap: 10px;">
+                        <div style="display: flex; flex-direction: column; align-items: flex-start; text-align: left;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <i class="fas fa-seedling"></i>
+                                <span style="font-weight: bold;">Iniciante</span>
+                            </div>
+                            <div style="font-size: 0.9rem; opacity: 0.9; margin-top: 5px;">
+                                60 segundos por questão
+                            </div>
+                            <div style="font-size: 0.85rem; opacity: 0.8; margin-top: 3px;">
+                                24 cartas fáceis
+                            </div>
+                        </div>
                     </button>
-                    <button class="action-btn secondary level-selector active" data-level="intermediate" data-time="40">
-                        <i class="fas fa-tree"></i> Intermediário (40s) - 48 cartas (fáceis + médias)
+                    
+                    <button class="action-btn secondary level-selector active" data-level="intermediate" 
+                            style="flex: 1; min-width: 200px; display: flex; align-items: center; justify-content: flex-start; gap: 10px;">
+                        <div style="display: flex; flex-direction: column; align-items: flex-start; text-align: left;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <i class="fas fa-tree"></i>
+                                <span style="font-weight: bold;">Intermediário</span>
+                            </div>
+                            <div style="font-size: 0.9rem; opacity: 0.9; margin-top: 5px;">
+                                45 segundos por questão
+                            </div>
+                            <div style="font-size: 0.85rem; opacity: 0.8; margin-top: 3px;">
+                                48 cartas (fáceis + médias)
+                            </div>
+                        </div>
                     </button>
-                    <button class="action-btn secondary level-selector" data-level="advanced" data-time="20">
-                        <i class="fas fa-mountain"></i> Avançado (20s) - 54 cartas (fáceis + médias + difíceis)
-                    <i></i>
+                    
+                    <button class="action-btn secondary level-selector" data-level="advanced" 
+                            style="flex: 1; min-width: 200px; display: flex; align-items: center; justify-content: flex-start; gap: 10px;">
+                        <div style="display: flex; flex-direction: column; align-items: flex-start; text-align: left;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <i class="fas fa-mountain"></i>
+                                <span style="font-weight: bold;">Avançado</span>
+                            </div>
+                            <div style="font-size: 0.9rem; opacity: 0.9; margin-top: 5px;">
+                                30 segundos por questão
+                            </div>
+                            <div style="font-size: 0.85rem; opacity: 0.8; margin-top: 3px;">
+                                54 cartas (todas)
+                            </div>
+                        </div>
                     </button>
+                    
                     <!-- Modo Prática -->
-                    <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1);">
-                        <button class="action-btn secondary" id="practiceModeBtn" style="width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 15px;">
+                    <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1); width: 100%;">
+                        <button class="action-btn secondary" id="practiceModeBtn" 
+                                style="width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 15px;">
                             <div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
                                 <i class="fas fa-graduation-cap"></i>
                                 <span>Modo Prática - Individual</span>
                             </div>
                             <p style="font-size: 0.85rem; color: var(--hint-important); text-align: center; margin-top: 8px; font-style: italic; margin-bottom: 0; font-weight: 500;">
-                                Antes de clicar "Modo Prática - Individual" para praticar, escolha o nível de dificuldade que deseja praticar
+                                Antes de clicar "Modo Prática", escolha o nível de dificuldade acima.
                             </p>
                             <p style="font-size: 0.85rem; color: var(--hint-normal); text-align: center; margin-top: 8px; font-style: italic; margin-bottom: 0;">
-                                Se for jogar contra um adversário, escolha o nível de dificuldade e clique em "Iniciar Jogo"
+                                Se for jogar contra um adversário, escolha o nível e clique em "Iniciar Jogo".
                             </p>
                         </button>
                     </div>
-
                 </div>
             </div>
 
@@ -1085,17 +1296,6 @@
             <!-- Inputs Dinâmicos para Nomes dos Jogadores -->
             <div class="panel-section">
                 <div id="dynamicPlayerInputs"></div>
-            </div>
-
-            <!-- Seção de Tempo por Turno -->
-            <div style="margin: 30px 0;">
-                <label style="display: block; margin-bottom: 10px; font-size: 1.1rem;">
-                    <i class="fas fa-clock"></i> Tempo por turno (segundos)
-                </label>
-                <input type="range" id="turnTime" min="15" max="60" value="30" style="width: 100%;">
-                <div style="text-align: center; margin-top: 5px;">
-                    <span id="timeValue">30s</span>
-                </div>
             </div>
 
             <!-- Botões de Ação -->
@@ -1244,6 +1444,11 @@
                             <div style="font-size: 0.9rem; opacity: 0.8;">Acertos</div>
                         </div>
                     </div>
+                    
+                    <!-- BOTÃO PARA DOWNLOAD DAS ESTATÍSTICAS - ADICIONADO AQUI -->
+                    <button class="action-btn secondary" id="downloadStatsBtn" style="width: 100%; margin-top: 15px;">
+                        <i class="fas fa-download"></i> Baixar Estatísticas
+                    </button>
                 </div>
             </div>
         </div>
@@ -1599,31 +1804,31 @@
                         <i class="fas fa-sliders-h"></i> Níveis de Dificuldade
                     </h3>
                     <div style="text-align: center; padding: 15px; background: rgba(46, 204, 113, 0.2); border-radius: 8px;">
-    <div style="font-size: 2rem; margin-bottom: 5px;">
-        <i class="fas fa-seedling"></i>
-    </div>
-    <h4 style="color: #2ecc71;">Iniciante</h4>
-    <p><strong>60 segundos</strong></p>
-    <p>24 cartas - apenas nível Fácil</p>
-</div>
+                        <div style="font-size: 2rem; margin-bottom: 5px;">
+                            <i class="fas fa-seedling"></i>
+                        </div>
+                        <h4 style="color: #2ecc71;">Iniciante</h4>
+                        <p><strong>60 segundos por questão</strong></p>
+                        <p>24 cartas - apenas nível Fácil</p>
+                    </div>
 
-<div style="text-align: center; padding: 15px; background: rgba(243, 156, 18, 0.2); border-radius: 8px;">
-    <div style="font-size: 2rem; margin-bottom: 5px;">
-        <i class="fas fa-tree"></i>
-    </div>
-    <h4 style="color: #f39c12;">Intermediário</h4>
-    <p><strong>40 segundos</strong></p>
-    <p>48 cartas - níveis Fácil + Médio</p>
-</div>
+                    <div style="text-align: center; padding: 15px; background: rgba(243, 156, 18, 0.2); border-radius: 8px;">
+                        <div style="font-size: 2rem; margin-bottom: 5px;">
+                            <i class="fas fa-tree"></i>
+                        </div>
+                        <h4 style="color: #f39c12;">Intermediário</h4>
+                        <p><strong>45 segundos por questão</strong></p>
+                        <p>48 cartas - níveis Fácil + Médio</p>
+                    </div>
 
-<div style="text-align: center; padding: 15px; background: rgba(231, 76, 60, 0.2); border-radius: 8px;">
-    <div style="font-size: 2rem; margin-bottom: 5px;">
-        <i class="fas fa-mountain"></i>
-    </div>
-    <h4 style="color: #e74c3c;">Avançado</h4>
-    <p><strong>20 segundos</strong></p>
-    <p>54 cartas - níveis Fácil + Médio + Difícil</p>
-</div>
+                    <div style="text-align: center; padding: 15px; background: rgba(231, 76, 60, 0.2); border-radius: 8px;">
+                        <div style="font-size: 2rem; margin-bottom: 5px;">
+                            <i class="fas fa-mountain"></i>
+                        </div>
+                        <h4 style="color: #e74c3c;">Avançado</h4>
+                        <p><strong>30 segundos por questão</strong></p>
+                        <p>54 cartas - níveis Fácil + Médio + Difícil</p>
+                    </div>
                     
                 </div>
                 
@@ -1729,7 +1934,14 @@
                 responseTimes: [], // Tempos de resposta
                 hintsUsed: 0,
                 mistakesHistory: [],
-                
+                playerCards: [], // Para rastrear cartas certas/erradas por jogador
+                deckHistory: [], // Histórico de cartas jogadas
+                mistakeCountByType: {
+                    concept: 0,
+                    application: 0,
+                    graph: 0
+                },
+                mistakePatterns: []
             }
         };
 
@@ -1750,8 +1962,8 @@
          */
         const levelTimes = {
             beginner: 60,
-            intermediate: 40,
-            advanced: 20
+            intermediate: 45, // Alterado para 45s
+            advanced: 30      // Alterado para 30s
         };
 
         // ========== PALETA DE CORES PARA JOGADORES ==========
@@ -2410,6 +2622,77 @@
             }
         }
 
+        // ========== FUNÇÃO PARA ATUALIZAR VISUAL DO NÍVEL ==========
+        function updateLevelVisual(level) {
+            const levelInfo = {
+                beginner: {
+                    name: "Iniciante",
+                    icon: "fa-seedling",
+                    color: "#2ecc71",
+                    time: "60s",
+                    cards: "24",
+                    difficulty: "Fácil",
+                    description: "60 segundos por questão • 24 cartas fáceis",
+                    details: "Ideal para quem está começando. Tempo generoso e questões básicas."
+                },
+                intermediate: {
+                    name: "Intermediário",
+                    icon: "fa-tree",
+                    color: "#f39c12",
+                    time: "45s",
+                    cards: "48",
+                    difficulty: "Média",
+                    description: "45 segundos por questão • 48 cartas (fáceis + médias)",
+                    details: "Balanço perfeito entre desafio e tempo. Recomendado para a maioria."
+                },
+                advanced: {
+                    name: "Avançado",
+                    icon: "fa-mountain",
+                    color: "#e74c3c",
+                    time: "30s",
+                    cards: "54",
+                    difficulty: "Alta",
+                    description: "30 segundos por questão • 54 cartas (todas)",
+                    details: "Para quem busca desafio máximo. Tempo reduzido e todas as questões."
+                }
+            };
+            
+            const info = levelInfo[level];
+            if (!info) return;
+            
+            // Atualizar elementos
+            document.getElementById('levelIcon').innerHTML = `<i class="fas ${info.icon}"></i>`;
+            document.getElementById('levelName').textContent = info.name;
+            document.getElementById('levelDescription').textContent = info.description;
+            document.getElementById('levelTime').textContent = info.time;
+            document.getElementById('levelCards').textContent = info.cards;
+            document.getElementById('levelDifficulty').textContent = info.difficulty;
+            
+            // Atualizar cores
+            const indicator = document.getElementById('levelVisualIndicator');
+            indicator.style.background = `linear-gradient(135deg, ${info.color}20, ${info.color}40)`;
+            indicator.style.border = `2px solid ${info.color}`;
+            indicator.style.color = info.color;
+            
+            // Ajustar para tema claro
+            if (document.body.classList.contains('theme-light')) {
+                indicator.style.color = info.color;
+            }
+            
+            // Ajustar para tema daltônico
+            if (document.body.classList.contains('theme-colorblind')) {
+                const colorblindColors = {
+                    beginner: { color: "#009e73", bg: "#009e7320", border: "#009e73" },
+                    intermediate: { color: "#f0e442", bg: "#f0e44220", border: "#f0e442" },
+                    advanced: { color: "#cc79a7", bg: "#cc79a720", border: "#cc79a7" }
+                };
+                const cbColor = colorblindColors[level];
+                indicator.style.background = `linear-gradient(135deg, ${cbColor.bg}, ${cbColor.bg.replace('20', '40')})`;
+                indicator.style.border = `2px solid ${cbColor.border}`;
+                indicator.style.color = level === 'intermediate' ? '#333333' : cbColor.color;
+            }
+        }
+
         // ========== FUNÇÕES CORRIGIDAS ==========
 
         // Função para parar timer com segurança
@@ -2627,7 +2910,7 @@
                 </button>
             `).join('');
             
-             // Configurar cabeçalho da pergunta
+            // Configurar cabeçalho da pergunta
             const typeText = card.type === 'concept' ? '📚 Conceito' : 
                             card.type === 'application' ? '💼 Aplicação' : '📈 Gráfico';
             
@@ -2642,7 +2925,6 @@
             const tempPlayer = { ...currentPlayer, streak: tempStreak };
             const pointsDetail = calculatePoints(card, tempPlayer);
             let bonusText = pointsDetail.comboBonus > 0 ? ` (+${pointsDetail.comboBonus} bônus)` : '';
-
 
             // Montar cabeçalho
             document.getElementById('questionHeaderContent').innerHTML = `
@@ -2787,6 +3069,51 @@
             if (gameState.responseStartTime <= 0 || diff > 120) diff = 2;
             gameState.currentGameStats.responseTimes.push(diff);
 
+            // Rastrear questões certas/erradas por jogador
+            if (!gameState.currentGameStats.playerCards) {
+                gameState.currentGameStats.playerCards = gameState.players.map(() => ({
+                    correct: [],
+                    wrong: []
+                }));
+            }
+
+            const playerIndex = gameState.currentPlayer;
+            const playerCards = gameState.currentGameStats.playerCards[playerIndex];
+
+            // Adicionar à lista de cartas jogadas
+            if (!gameState.currentGameStats.deckHistory) {
+                gameState.currentGameStats.deckHistory = [];
+            }
+
+            const cardPlayed = {
+                cardId: card.id,
+                question: card.question,
+                type: card.type,
+                difficulty: card.difficulty,
+                player: gameState.players[playerIndex].name,
+                correct: isCorrect,
+                timestamp: new Date().toISOString()
+            };
+
+            gameState.currentGameStats.deckHistory.push(cardPlayed);
+
+            // Adicionar às listas do jogador
+            if (isCorrect) {
+                playerCards.correct.push({
+                    id: card.id,
+                    question: card.question,
+                    type: card.type,
+                    difficulty: card.difficulty
+                });
+            } else {
+                playerCards.wrong.push({
+                    id: card.id,
+                    question: card.question,
+                    type: card.type,
+                    difficulty: card.difficulty
+                });
+            }
+
             // Atualizar estatísticas
             player.totalAnswers++;
             gameState.totalQuestions++;
@@ -2804,12 +3131,42 @@
                 player.score += pointsDetail.totalPoints;
                 player.lastScoreChange = pointsDetail.totalPoints;
                 
+                // Atualizar histórico de pontuação
+                if (!player.scoreHistory) {
+                    player.scoreHistory = [0];
+                }
+                player.scoreHistory.push(player.score);
+                
                 player.correctAnswers++;
                 gameState.correctAnswers++;
             } else {
                 // Resposta incorreta
                 player.streak = 0;
                 player.lastScoreChange = 0;
+                
+                // Rastrear padrões de erros
+                if (!gameState.currentGameStats.mistakePatterns) {
+                    gameState.currentGameStats.mistakePatterns = [];
+                }
+                
+                gameState.currentGameStats.mistakePatterns.push({
+                    cardId: card.id,
+                    type: card.type,
+                    difficulty: card.difficulty,
+                    player: gameState.players[playerIndex].name,
+                    wrongAnswer: card.options[selectedIndex],
+                    correctAnswer: card.options[card.correct]
+                });
+                
+                // Contar erros por tipo
+                if (!gameState.currentGameStats.mistakeCountByType) {
+                    gameState.currentGameStats.mistakeCountByType = {
+                        concept: 0,
+                        application: 0,
+                        graph: 0
+                    };
+                }
+                gameState.currentGameStats.mistakeCountByType[card.type]++;
             }
 
             // Mostrar resultado
@@ -2949,7 +3306,7 @@
                 maxScore: gameState.maxScore,
                 gameId: gameState.gameId,
                 playerCount: playerCount,
-                turnTime: parseInt(document.getElementById('turnTime').value),
+                turnTime: levelTimes[gameState.difficultyLevel], // Usa o tempo do nível
                 practiceMode: gameState.practiceMode,
                 difficultyLevel: gameState.difficultyLevel,
                 currentGameStats: gameState.currentGameStats,
@@ -3006,7 +3363,15 @@
                     },
                     responseTimes: [],
                     hintsUsed: 0,
-                    mistakesHistory: []
+                    mistakesHistory: [],
+                    playerCards: [],
+                    deckHistory: [],
+                    mistakeCountByType: {
+                        concept: 0,
+                        application: 0,
+                        graph: 0
+                    },
+                    mistakePatterns: []
                 };
                 
                 // Estados de controle
@@ -3037,8 +3402,6 @@
                 // Restaurar configurações
                 playerCount = data.playerCount || 2;
                 document.getElementById('playerCount').textContent = playerCount;
-                document.getElementById('turnTime').value = data.turnTime || 30;
-                document.getElementById('timeValue').textContent = (data.turnTime || 30) + 's';
                 
                 // Atualizar botão de nível ativo
                 document.querySelectorAll('.level-selector').forEach(btn => {
@@ -3126,12 +3489,13 @@
 
             // 6. Mostrar resultado final
             document.getElementById('resultIcon').innerHTML = '<i class="fas fa-trophy" style="color: #f1c40f; font-size: 4rem;"></i>';
-            document.getElementById('resultTitle').innerHTML = `VITÓRIA DE ${winner.name.toUpperCase()}!`;
+            document.getElementById('resultTitle').innerHTML = `JOGO FINALIZADO!`;
             document.getElementById('resultTitle').className = 'result-title correct';
 
             document.getElementById('explanationText').innerHTML = `
                 <div style="text-align: center; background: rgba(0,0,0,0.1); padding: 15px; border-radius: 10px;">
-                    <p style="margin-bottom: 10px;">Motivo: <strong>${reason === 'points' ? 'Pontuação máxima atingida!' : 'Cartas esgotadas!'}</strong></p>
+                    <p style="margin-bottom: 10px;"><strong>${reason === 'points' ? 'Pontuação máxima atingida!' : 'Cartas esgotadas!'}</strong></p>
+                    <p style="margin-bottom: 15px; font-size: 1.2rem;">Vencedor: <strong>${winner.name}</strong> com ${winner.score} pontos!</p>
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 0.9rem;">
                         <div style="padding: 10px; border: 1px solid rgba(255,255,255,0.1)">
                             <div style="font-size: 1.2rem; font-weight: bold;">${gameState.totalQuestions}</div>
@@ -3158,19 +3522,24 @@
             document.getElementById('drawCardBtn').style.display = 'none';
 
             const nextBtn = document.getElementById('nextPlayerBtn');
-            nextBtn.innerHTML = '<i class="fas fa-redo"></i> JOGAR NOVAMENTE';
-            nextBtn.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
+            nextBtn.innerHTML = '<i class="fas fa-times"></i> FECHAR';
+            nextBtn.style.background = 'linear-gradient(135deg, #e74c3c, #c0392b)';
             
-            // O pulo do gato: ao clicar, apaga o save e recarrega
-            // Configurar botão para reiniciar
+            // Configurar botão para fechar o modal
             nextBtn.onclick = function() {
-                localStorage.removeItem('mathCards_save');
-                window.location.reload();
+                modal.style.display = 'none';
+                clearCardFromTable();
+                // O jogo já está finalizado, apenas fecha o modal
+                // O usuário pode usar o botão "Novo Jogo / Resetar" para reiniciar
+                // Ou baixar as estatísticas através do botão no painel
             };
 
             // 8. Exibir o Modal
             modal.style.display = 'block';
             clearCardFromTable();
+            
+            // 9. Salvar estado final
+            saveGameState();
         }
 
         // ========== FUNÇÕES AUXILIARES ==========
@@ -3242,7 +3611,7 @@
             document.getElementById('correctAnswers').textContent = gameState.correctAnswers;
         }
 
-         /**
+        /**
          * Retorna o nome do nível atual
          * @param {string} level - Nível ('beginner', 'intermediate', 'advanced')
          * @returns {string} Nome formatado do nível
@@ -3302,6 +3671,341 @@
             }).join('');
         }
 
+        // ========== FUNÇÕES PARA EXPORTAR ESTATÍSTICAS ==========
+
+        /**
+         * Exporta as estatísticas do jogo
+         * @returns {void}
+         */
+        function exportGameStats() {
+            if (!gameState.gameActive && gameState.players.length === 0) {
+                showNotification("Não há dados de jogo para exportar!", 'warning');
+                return;
+            }
+            
+            // Coletar dados abrangentes
+            const stats = {
+                // Informações do jogo
+                gameInfo: {
+                    id: gameState.gameId,
+                    date: new Date().toISOString(),
+                    level: gameState.difficultyLevel,
+                    levelName: getLevelName(gameState.difficultyLevel),
+                    mode: gameState.practiceMode ? "Prática" : "Competitivo",
+                    totalQuestions: gameState.totalQuestions,
+                    correctAnswers: gameState.correctAnswers,
+                    accuracy: gameState.totalQuestions > 0 
+                        ? Math.round((gameState.correctAnswers / gameState.totalQuestions) * 100) 
+                        : 0,
+                    totalTurns: gameState.totalTurns,
+                    gameDuration: gameState.currentGameStats.gameEndTime 
+                        ? Math.round((gameState.currentGameStats.gameEndTime - 
+                          new Date(gameState.currentGameStats.gameStartTime)) / 1000) + " segundos"
+                        : "Em andamento"
+                },
+                
+                // Estatísticas por tipo de pergunta
+                questionsByType: {
+                    ...gameState.currentGameStats.questionsByType,
+                    totalConcept: allCards.filter(c => c.type === 'concept').length,
+                    totalApplication: allCards.filter(c => c.type === 'application').length,
+                    totalGraph: allCards.filter(c => c.type === 'graph').length
+                },
+                
+                // Tempos de resposta
+                responseTimes: {
+                    average: gameState.currentGameStats.responseTimes.length > 0
+                        ? (gameState.currentGameStats.responseTimes.reduce((a, b) => a + b, 0) / 
+                           gameState.currentGameStats.responseTimes.length).toFixed(2) + "s"
+                        : "N/A",
+                    fastest: gameState.currentGameStats.responseTimes.length > 0
+                        ? Math.min(...gameState.currentGameStats.responseTimes).toFixed(2) + "s"
+                        : "N/A",
+                    slowest: gameState.currentGameStats.responseTimes.length > 0
+                        ? Math.max(...gameState.currentGameStats.responseTimes).toFixed(2) + "s"
+                        : "N/A",
+                    total: gameState.currentGameStats.responseTimes.length
+                },
+                
+                // Estatísticas dos jogadores
+                players: gameState.players.map((player, index) => {
+                    const playerCards = gameState.currentGameStats.playerCards 
+                        ? gameState.currentGameStats.playerCards[index] || { correct: [], wrong: [] }
+                        : { correct: [], wrong: [] };
+                    
+                    return {
+                        name: player.name,
+                        position: index + 1,
+                        score: player.score,
+                        correctAnswers: player.correctAnswers,
+                        totalAnswers: player.totalAnswers,
+                        accuracy: player.totalAnswers > 0 
+                            ? Math.round((player.correctAnswers / player.totalAnswers) * 100) + "%"
+                            : "0%",
+                        streak: player.streak,
+                        maxStreak: player.maxStreak,
+                        questionsCorrect: playerCards.correct,
+                        questionsWrong: playerCards.wrong,
+                        scoreProgression: player.scoreHistory || [0],
+                        averageTimePerQuestion: gameState.currentGameStats.responseTimes.length > 0
+                            ? (gameState.currentGameStats.responseTimes
+                                .slice(index * Math.floor(gameState.currentGameStats.responseTimes.length / gameState.players.length),
+                                      (index + 1) * Math.floor(gameState.currentGameStats.responseTimes.length / gameState.players.length))
+                                .reduce((a, b) => a + b, 0) / 
+                              Math.floor(gameState.currentGameStats.responseTimes.length / gameState.players.length)).toFixed(2) + "s"
+                            : "N/A"
+                    };
+                }),
+                
+                // Detalhes das cartas jogadas
+                cardsPlayed: gameState.currentGameStats.deckHistory || [],
+                
+                // Histórico de erros
+                mistakesAnalysis: {
+                    totalMistakes: gameState.totalQuestions - gameState.correctAnswers,
+                    mostCommonWrongType: gameState.currentGameStats.mistakeCountByType ? 
+                        Object.entries(gameState.currentGameStats.mistakeCountByType).sort((a, b) => b[1] - a[1])[0]?.[0] || "N/A" : "N/A",
+                    mistakePatterns: gameState.currentGameStats.mistakePatterns || []
+                },
+                
+                // Conquistas e destaques
+                highlights: {
+                    highestScore: Math.max(...gameState.players.map(p => p.score)),
+                    highestAccuracy: Math.max(...gameState.players.map(p => 
+                        p.totalAnswers > 0 ? (p.correctAnswers / p.totalAnswers) * 100 : 0
+                    )),
+                    longestStreak: Math.max(...gameState.players.map(p => p.maxStreak)),
+                    fastestAnswer: gameState.currentGameStats.responseTimes.length > 0
+                        ? Math.min(...gameState.currentGameStats.responseTimes).toFixed(2) + "s"
+                        : "N/A"
+                }
+            };
+            
+            // Criar opções de exportação
+            showExportOptions(stats);
+        }
+
+        // ========== FUNÇÃO PARA MOSTRAR OPÇÕES DE EXPORTAÇÃO ==========
+        function showExportOptions(stats) {
+            const exportModal = document.createElement('div');
+            exportModal.className = 'modal active';
+            exportModal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.9);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 3000;
+            `;
+            
+            exportModal.innerHTML = `
+                <div style="background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
+                            border-radius: 20px;
+                            padding: 30px;
+                            width: 90%;
+                            max-width: 600px;
+                            border: 2px solid var(--secondary-color);
+                            box-shadow: 0 20px 60px rgba(0,0,0,0.5);">
+                    <h2 style="color: var(--secondary-color); margin-bottom: 25px; text-align: center;">
+                        <i class="fas fa-download"></i> Exportar Estatísticas
+                    </h2>
+                    
+                    <div style="margin-bottom: 25px;">
+                        <p style="margin-bottom: 15px;">Escolha o formato de exportação:</p>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                            <button class="action-btn primary" id="exportJsonBtn" style="padding: 15px;">
+                                <i class="fas fa-file-code"></i> JSON - Pesquisador/Desenvolvedor
+                            </button>
+                            
+                            <button class="action-btn primary" id="exportCsvBtn" style="padding: 15px;">
+                                <i class="fas fa-file-csv"></i> CSV - Professor/Orientador
+                            </button>
+                            
+                            <button class="action-btn secondary" id="exportTxtBtn" style="padding: 15px; grid-column: span 2;">
+                                <i class="fas fa-file-alt"></i> Texto Formatado -  Aluno/Estudante
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center;">
+                        <button class="action-btn secondary" id="closeExportBtn" style="padding: 12px 30px;">
+                            <i class="fas fa-times"></i> Cancelar
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(exportModal);
+            
+            // Event Listeners para os botões
+            document.getElementById('exportJsonBtn').addEventListener('click', () => {
+                exportAsJson(stats);
+                exportModal.remove();
+            });
+            
+            document.getElementById('exportCsvBtn').addEventListener('click', () => {
+                exportAsCsv(stats);
+                exportModal.remove();
+            });
+            
+            document.getElementById('exportTxtBtn').addEventListener('click', () => {
+                exportAsText(stats);
+                exportModal.remove();
+            });
+            
+            document.getElementById('closeExportBtn').addEventListener('click', () => {
+                exportModal.remove();
+            });
+            
+            // Fechar ao clicar fora
+            exportModal.addEventListener('click', (e) => {
+                if (e.target === exportModal) {
+                    exportModal.remove();
+                }
+            });
+        }
+
+        // ========== FUNÇÕES DE EXPORTAÇÃO ==========
+        function exportAsJson(stats) {
+            const dataStr = JSON.stringify(stats, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
+            
+            const exportFileDefaultName = `estatisticas_Json_Pesquisador_Desenvolvedor_${gameState.gameId}_${new Date().toISOString().slice(0,10)}.json`;
+            
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+            
+            showNotification("Estatísticas exportadas como JSON!", 'success');
+        }
+
+        function exportAsCsv(stats) {
+            // Cabeçalhos CSV
+            let csvContent = "Estatísticas do Jogo - Enfim, Afim  (Analista de dados)\n\n";
+            
+            // Informações do jogo
+            csvContent += "INFORMAÇÕES DO JOGO\n";
+            csvContent += `ID do Jogo,${stats.gameInfo.id}\n`;
+            csvContent += `Data,${new Date(stats.gameInfo.date).toLocaleString()}\n`;
+            csvContent += `Nível,${stats.gameInfo.levelName}\n`;
+            csvContent += `Modo,${stats.gameInfo.mode}\n`;
+            csvContent += `Total de Perguntas,${stats.gameInfo.totalQuestions}\n`;
+            csvContent += `Acertos,${stats.gameInfo.correctAnswers}\n`;
+            csvContent += `Precisão,${stats.gameInfo.accuracy}%\n\n`;
+            
+            // Estatísticas dos jogadores
+            csvContent += "JOGADORES\n";
+            csvContent += "Nome,Posição,Pontuação,Acertos,Total,Precisão,Streak Atual,Maior Streak\n";
+            
+            stats.players.forEach(player => {
+                csvContent += `${player.name},${player.position},${player.score},${player.correctAnswers},${player.totalAnswers},${player.accuracy},${player.streak},${player.maxStreak}\n`;
+            });
+            
+            csvContent += "\n";
+            
+            // Estatísticas por tipo
+            csvContent += "ESTATÍSTICAS POR TIPO\n";
+            csvContent += "Tipo,Jogadas,Total Disponível\n";
+            csvContent += `Conceito,${stats.questionsByType.concept},${stats.questionsByType.totalConcept}\n`;
+            csvContent += `Aplicação,${stats.questionsByType.application},${stats.questionsByType.totalApplication}\n`;
+            csvContent += `Gráfico,${stats.questionsByType.graph},${stats.questionsByType.totalGraph}\n\n`;
+            
+            // Tempos de resposta
+            csvContent += "TEMPOS DE RESPOSTA\n";
+            csvContent += `Média,${stats.responseTimes.average}\n`;
+            csvContent += `Mais Rápida,${stats.responseTimes.fastest}\n`;
+            csvContent += `Mais Lenta,${stats.responseTimes.slowest}\n`;
+            csvContent += `Total de Respostas,${stats.responseTimes.total}\n`;
+            
+            const dataUri = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csvContent);
+            const exportFileDefaultName = `estatisticas_${gameState.gameId}_${new Date().toISOString().slice(0,10)}.csv`;
+            
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+            
+            showNotification("Estatísticas exportadas como CSV!", 'success');
+        }
+
+        function exportAsText(stats) {
+            let textContent = "=".repeat(60) + "\n";
+            textContent += "ESTATÍSTICAS DO JOGO - ENFIM, AFIM  (Professor/Estudante)\n";
+            textContent += "=".repeat(60) + "\n\n";
+            
+            // Informações do jogo
+            textContent += "INFORMAÇÕES DO JOGO:\n";
+            textContent += "-".repeat(40) + "\n";
+            textContent += `• ID do Jogo: ${stats.gameInfo.id}\n`;
+            textContent += `• Data: ${new Date(stats.gameInfo.date).toLocaleString()}\n`;
+            textContent += `• Nível: ${stats.gameInfo.levelName}\n`;
+            textContent += `• Modo: ${stats.gameInfo.mode}\n`;
+            textContent += `• Total de Perguntas: ${stats.gameInfo.totalQuestions}\n`;
+            textContent += `• Acertos: ${stats.gameInfo.correctAnswers}\n`;
+            textContent += `• Precisão: ${stats.gameInfo.accuracy}%\n\n`;
+            
+            // Estatísticas dos jogadores
+            textContent += "JOGADORES:\n";
+            textContent += "-".repeat(40) + "\n";
+            
+            stats.players.forEach(player => {
+                textContent += `\n${player.position}º Lugar: ${player.name}\n`;
+                textContent += `  Pontuação: ${player.score} pontos\n`;
+                textContent += `  Acertos: ${player.correctAnswers}/${player.totalAnswers} (${player.accuracy})\n`;
+                textContent += `  Streak: ${player.streak} (Máximo: ${player.maxStreak})\n`;
+                
+                if (player.questionsCorrect && player.questionsCorrect.length > 0) {
+                    textContent += `  Questões Acertadas: ${player.questionsCorrect.length}\n`;
+                }
+                
+                if (player.questionsWrong && player.questionsWrong.length > 0) {
+                    textContent += `  Questões Erradas: ${player.questionsWrong.length}\n`;
+                }
+            });
+            
+            textContent += "\n" + "=".repeat(60) + "\n";
+            textContent += "DETALHES POR TIPO DE CARTA:\n";
+            textContent += "-".repeat(40) + "\n";
+            textContent += `• Conceito: ${stats.questionsByType.concept} de ${stats.questionsByType.totalConcept}\n`;
+            textContent += `• Aplicação: ${stats.questionsByType.application} de ${stats.questionsByType.totalApplication}\n`;
+            textContent += `• Gráfico: ${stats.questionsByType.graph} de ${stats.questionsByType.totalGraph}\n\n`;
+            
+            // Tempos de resposta
+            textContent += "TEMPOS DE RESPOSTA:\n";
+            textContent += "-".repeat(40) + "\n";
+            textContent += `• Média: ${stats.responseTimes.average}\n`;
+            textContent += `• Mais Rápida: ${stats.responseTimes.fastest}\n`;
+            textContent += `• Mais Lenta: ${stats.responseTimes.slowest}\n\n`;
+            
+            // Destaques
+            textContent += "DESTAQUES:\n";
+            textContent += "-".repeat(40) + "\n";
+            textContent += `• Maior Pontuação: ${stats.highlights.highestScore} pontos\n`;
+            textContent += `• Maior Precisão: ${stats.highlights.highestAccuracy.toFixed(1)}%\n`;
+            textContent += `• Maior Streak: ${stats.highlights.longestStreak} acertos consecutivos\n`;
+            textContent += `• Resposta Mais Rápida: ${stats.highlights.fastestAnswer}\n`;
+            
+            textContent += "\n" + "=".repeat(60) + "\n";
+            textContent += "Relatório gerado em: " + new Date().toLocaleString() + "\n";
+            textContent += "=".repeat(60);
+            
+            const dataUri = 'data:text/plain;charset=utf-8,' + encodeURIComponent(textContent);
+            const exportFileDefaultName = `estatisticas_${gameState.gameId}_${new Date().toISOString().slice(0,10)}.txt`;
+            
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+            
+            showNotification("Estatísticas exportadas como texto!", 'success');
+        }
+
         // ========== INICIALIZAÇÃO DO JOGO ==========
 
         /**
@@ -3340,6 +4044,7 @@
                 maxStreak: 0,
                 lastScoreChange: 0,
                 doublePointsUsed: false,
+                scoreHistory: [0], // Histórico de pontuação
                 gameStats: {
                     fastAnswers: 0,
                     conceptCorrect: 0,
@@ -3351,8 +4056,8 @@
                 }
             }));
             
-             // Configurar dificuldade
-             gameState.difficultyLevel = document.querySelector('.level-selector.active').dataset.level;
+            // Configurar dificuldade
+            gameState.difficultyLevel = document.querySelector('.level-selector.active').dataset.level;
             gameState.timeLeft = levelTimes[gameState.difficultyLevel]; 
 
             // Usar filtros de dificuldade reais
@@ -3375,6 +4080,12 @@
             gameState.cardOnTable = false;
             gameState.answerSubmitted = false;
             gameState.timerActive = false;
+            
+            // Inicializar estatísticas de cartas por jogador
+            gameState.currentGameStats.playerCards = gameState.players.map(() => ({
+                correct: [],
+                wrong: []
+            }));
             
             // Atualizar interface
             updatePlayersDisplay();
@@ -3440,11 +4151,6 @@
             // Gerar inputs iniciais
             generatePlayerInputs(playerCount);
             
-            // Configurar controle de tempo
-            document.getElementById('turnTime').addEventListener('input', function() {
-                document.getElementById('timeValue').textContent = this.value + 's';
-            });
-            
             // Controles de número de jogadores
             document.getElementById('increasePlayers').addEventListener('click', function() {
                 if (playerCount < 8) {
@@ -3465,17 +4171,21 @@
             // Seletores de nível
             document.querySelectorAll('.level-selector').forEach(button => {
                 button.addEventListener('click', function() {
+                    // Remove a classe active de todos
                     document.querySelectorAll('.level-selector').forEach(btn => {
                         btn.classList.remove('active');
                     });
+                    // Adiciona active no clicado
                     this.classList.add('active');
                     
-                    const time = this.dataset.time;
-                    document.getElementById('turnTime').value = time;
-                    document.getElementById('timeValue').textContent = time + 's';
+                    // Atualizar visualização do nível
+                    const selectedLevel = this.dataset.level;
+                    updateLevelVisual(selectedLevel);
                 });
             });
-            
+
+            updateLevelVisual('intermediate');
+
             // Seletores de tema
             document.querySelectorAll('.theme-selector, .theme-selector-modal').forEach(button => {
                 button.addEventListener('click', function() {
@@ -3484,6 +4194,12 @@
                     gameState.theme = theme;
                     localStorage.setItem('mathCards_theme', theme);
                     updatePlayersDisplay();
+                    
+                    // Atualizar visual do nível após mudar tema
+                    const activeLevel = document.querySelector('.level-selector.active');
+                    if (activeLevel) {
+                        updateLevelVisual(activeLevel.dataset.level);
+                    }
                 });
             });
             
@@ -3618,6 +4334,7 @@
                         maxStreak: 0,
                         lastScoreChange: 0,
                         doublePointsUsed: false,
+                        scoreHistory: [0],
                         gameStats: {
                             fastAnswers: 0,
                             conceptCorrect: 0,
@@ -3652,6 +4369,12 @@
                     gameState.answerSubmitted = false;
                     gameState.timerActive = false;
                     
+                    // Inicializar estatísticas de cartas por jogador
+                    gameState.currentGameStats.playerCards = gameState.players.map(() => ({
+                        correct: [],
+                        wrong: []
+                    }));
+                    
                     updatePlayersDisplay();
                     updateStats();
                     updateLevelDisplay();
@@ -3669,6 +4392,9 @@
             
             // Botão carregar jogo
             document.getElementById('loadGameBtn').addEventListener('click', loadGameState);
+            
+            // Botão para baixar estatísticas
+            document.getElementById('downloadStatsBtn').addEventListener('click', exportGameStats);
             
             // Fechar modais clicando fora
             document.querySelectorAll('.modal').forEach(modal => {
